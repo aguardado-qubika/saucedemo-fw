@@ -11,3 +11,5 @@ node_modules/
 dist/
 evidence/
 qubika-agentic-framework/
+.claude-temp/
+.claude-backups/
