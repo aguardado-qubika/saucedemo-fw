@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { USERS, MESSAGES } from '../utils/test-data';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Login Page — SAU-7, SAU-8, SAU-9', () => {
+test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28', () => {
 
     // TC-001 — SAU-7
     test('TC-001 — should login successfully with valid credentials',
@@ -80,6 +80,21 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9', () => {
             await expect(loginPage.getErrorMessage()).toBeVisible();
             await expect(loginPage.getErrorMessage())
                 .toContainText(MESSAGES.lockedOut);
+        });
+
+    // TC-008 — SAU-28
+    test('TC-008 — should redirect to inventory page after valid login',
+        async ({ loginPage, inventoryPage }) => {
+            qase.id(8);
+            qase.title('Valid login redirects to inventory with Products title');
+
+            await loginPage.loginWith(
+                USERS.standard.username,
+                USERS.standard.password
+            );
+
+            await expect(inventoryPage.getPageTitle())
+                .toHaveText('Products');
         });
 
 });
