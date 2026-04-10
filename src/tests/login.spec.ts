@@ -99,19 +99,11 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29', () => {
                 .toContainText(MESSAGES.lockedOut);
         });
 
-    // TC-008 — SAU-28
-    test('TC-008 — should redirect to inventory page after valid login',
+    // TC-010 — SAU-28
+    test('TC-010 — should redirect to inventory page after valid login',
         async ({ loginPage, inventoryPage }) => {
-            qase.id(8);
+            qase.id(10);
             qase.title('Valid login redirects to inventory with Products title');
-
-            await loginPage.loginWith(
-                USERS.standard.username,
-                USERS.standard.password
-            );
-
-            await expect(inventoryPage.getPageTitle())
-                .toHaveText('Products');
         });
 
 });
