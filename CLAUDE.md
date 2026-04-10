@@ -27,6 +27,7 @@ src/
 | SAU-9 | Locked out user cannot access the application | login.spec.ts |
 | SAU-10 | User can add a product to the cart | inventory.spec.ts |
 | SAU-11 | User can complete the checkout process | checkout.spec.ts |
+| SAU-28 | User can log in with valid credentials | login.spec.ts |
 
 ---
 
