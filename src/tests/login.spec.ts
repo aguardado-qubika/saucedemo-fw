@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { USERS, MESSAGES } from '../utils/test-data';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Login Page — SAU-7, SAU-8, SAU-9', () => {
+test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-29', () => {
 
     // TC-001 — SAU-7
     test('TC-001 — should login successfully with valid credentials',
@@ -64,6 +64,23 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9', () => {
 
             await expect(loginPage.getErrorMessage())
                 .toContainText(MESSAGES.passwordRequired);
+        });
+
+    // TC-009 — SAU-29
+    test('TC-009 — should remain on login page after failed login attempt',
+        async ({ loginPage, page }) => {
+            qase.id(9);
+            qase.title('User remains on login page after invalid credentials');
+
+            await loginPage.loginWith(
+                USERS.invalid.username,
+                USERS.invalid.password
+            );
+
+            await expect(loginPage.getErrorMessage()).toBeVisible();
+            await expect(loginPage.getErrorMessage())
+                .toContainText(MESSAGES.invalidCreds);
+            await expect(page).toHaveURL('/');
         });
 
     // TC-005 — SAU-9
