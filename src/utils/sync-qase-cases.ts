@@ -1,11 +1,14 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as dotenv from 'dotenv';
-import { LINEAR_ISSUES, QASE_TO_TC } from './test-data';
+import { LINEAR_ISSUES, QASE_TO_TC, TC_TO_LINEAR } from './test-data';
 
 dotenv.config();
 
-const TOKEN        = process.env.QASE_TESTOPS_API_TOKEN;
-const QASE_API     = 'https://api.qase.io/v1';
+const TOKEN = process.env.QASE_TESTOPS_API_TOKEN;
+const QASE_API = 'https://api.qase.io/v1';
 const QASE_PROJECT = 'STA';
+const TEST_DATA_PATH = path.join(__dirname, 'test-data.ts');
 
 if (!TOKEN) {
   console.error('❌ QASE_TESTOPS_API_TOKEN not found in .env file');
@@ -14,11 +17,12 @@ if (!TOKEN) {
 
 // Suite ID mapping — matches Qase project STA
 const SUITE_MAP: Record<string, number> = {
-  'SAU-7':  1, // Login
-  'SAU-8':  1, // Login
-  'SAU-9':  1, // Login
+  'SAU-7': 1, // Login
+  'SAU-8': 1, // Login
+  'SAU-9': 1, // Login
   'SAU-10': 2, // Inventory
   'SAU-11': 3, // Checkout
+  'SAU-48': 2, // Inventory
 };
 
 // TC → suite ID lookup
@@ -29,6 +33,39 @@ function getSuiteId(tc: string): number {
     }
   }
   return 1;
+}
+
+// Auto-update QASE_TO_TC in test-data.ts
+function updateTestDataFile(qaseId: number, tcId: string): void {
+  const content = fs.readFileSync(TEST_DATA_PATH, 'utf-8');
+
+  // Check if mapping already exists — idempotent guard
+  if (content.includes(`${qaseId}: '${tcId}'`) || content.includes(`${qaseId}: "${tcId}"`)) {
+    console.log(`   ℹ️  QASE_TO_TC already contains ${qaseId} → ${tcId} — skipping`);
+    return;
+  }
+
+  // Find the closing brace of QASE_TO_TC block
+  // Pattern: find "export const QASE_TO_TC" then find its closing "};"
+  const qaseToTcStart = content.indexOf('export const QASE_TO_TC');
+  if (qaseToTcStart === -1) {
+    console.error('   ❌ Could not find QASE_TO_TC in test-data.ts — update manually');
+    return;
+  }
+
+  // Find the closing "};" after QASE_TO_TC
+  const closingBrace = content.indexOf('};', qaseToTcStart);
+  if (closingBrace === -1) {
+    console.error('   ❌ Could not find closing brace of QASE_TO_TC — update manually');
+    return;
+  }
+
+  // Insert new entry before closing brace
+  const newEntry = `  ${qaseId}: '${tcId}',\n`;
+  const updated = content.slice(0, closingBrace) + newEntry + content.slice(closingBrace);
+
+  fs.writeFileSync(TEST_DATA_PATH, updated, 'utf-8');
+  console.log(`   ✅ Updated QASE_TO_TC in test-data.ts: ${qaseId} → ${tcId}`);
 }
 
 // Fetch all existing cases from Qase
@@ -46,7 +83,6 @@ async function fetchExistingCases(): Promise<Map<string, number>> {
   const data = await response.json() as any;
   if (!data.status) throw new Error(`Failed to fetch cases: ${JSON.stringify(data)}`);
 
-  // Map title → case ID for existing cases
   const existing = new Map<string, number>();
   for (const c of data.result.entities) {
     existing.set(c.title.trim(), c.id);
@@ -55,10 +91,7 @@ async function fetchExistingCases(): Promise<Map<string, number>> {
 }
 
 // Create a new case in Qase
-async function createCase(
-  title: string,
-  suiteId: number
-): Promise<number> {
+async function createCase(title: string, suiteId: number): Promise<number> {
   const response = await fetch(
     `${QASE_API}/case/${QASE_PROJECT}`,
     {
@@ -70,8 +103,8 @@ async function createCase(
       body: JSON.stringify({
         title,
         suite_id: suiteId,
-        type:      2, // functional
-        priority:  2, // medium
+        type: 2, // functional
+        priority: 2, // medium
       }),
     }
   );
@@ -97,36 +130,36 @@ function buildTitle(tc: string): string {
 async function main(): Promise<void> {
   console.log('\n🚀 Syncing test cases to Qase...\n');
 
-  // All TC IDs we know about
-  const allTCs = Object.values(QASE_TO_TC);
+  // Use TC_TO_LINEAR as source of truth for all known TCs
+  // QASE_TO_TC only tracks what's already been synced
+  const allTCs = Object.keys(TC_TO_LINEAR);
 
-  // Fetch what already exists in Qase
   process.stdout.write('⏳ Fetching existing Qase cases...');
   const existing = await fetchExistingCases();
   console.log(` ✅ Found ${existing.size} existing cases`);
 
-  // Existing Qase case IDs (reverse lookup)
   const existingQaseIds = new Set(Object.keys(QASE_TO_TC).map(Number));
 
   const created: Array<{ tc: string; qaseId: number; title: string }> = [];
   const skipped: Array<{ tc: string; qaseId: number }> = [];
 
   for (const tc of allTCs) {
-    // Check if TC already has a Qase ID in test-data.ts
-    const existingId = Object.entries(QASE_TO_TC).find(([, v]) => v === tc)?.[0];
-    if (existingId && existingQaseIds.has(Number(existingId))) {
-      skipped.push({ tc, qaseId: Number(existingId) });
+    const existingEntry = Object.entries(QASE_TO_TC).find(([, v]) => v === tc);
+    if (existingEntry) {
+      skipped.push({ tc, qaseId: Number(existingEntry[0]) });
       continue;
     }
 
-    // TC not in Qase yet — create it
-    const title   = buildTitle(tc);
+    const title = buildTitle(tc);
     const suiteId = getSuiteId(tc);
 
     process.stdout.write(`⏳ Creating ${tc} in Qase...`);
     const newId = await createCase(title, suiteId);
     created.push({ tc, qaseId: newId, title });
     console.log(` ✅ Created as STA-${newId}`);
+
+    // Auto-update test-data.ts
+    updateTestDataFile(newId, tc);
   }
 
   console.log('\n--- SUMMARY ---\n');
@@ -146,7 +179,7 @@ async function main(): Promise<void> {
     }
     console.log('\n⚠️  Remember to:');
     console.log('   1. Add the qase.id(N) annotations above to your spec files');
-    console.log('   2. Update QASE_TO_TC in src/utils/test-data.ts with the new IDs');
+    console.log('   ✅ QASE_TO_TC in test-data.ts updated automatically');
   } else {
     console.log('\n✅ All test cases already exist in Qase — nothing to create.');
   }
