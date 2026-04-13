@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Inventory Page — SAU-10', () => {
+test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
   // TC-006 — SAU-10
   test('TC-006 — should add first product to cart',
@@ -16,6 +16,18 @@ test.describe('Inventory Page — SAU-10', () => {
 
       const count = await loggedInPage.getProductCount();
       expect(count).toBeGreaterThan(0);
+    });
+
+  // TC-012 — SAU-31
+  test('TC-012 — should show cart badge count of 1 after adding a product',
+    async ({ loggedInPage }) => {
+      qase.id(12);
+      qase.title('Cart badge shows count 1 after adding a product');
+
+      await loggedInPage.addFirstProductToCart();
+
+      await expect(loggedInPage.getCartBadge())
+        .toHaveText('1');
     });
 
   // TC-008 — SAU-48
