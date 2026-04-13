@@ -12,14 +12,16 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-// The 5 issues we want to generate .md files for
 const ISSUES = [
-  { id: 'SAU-7', file: 'SAU-07-test-cases.md' },
-  { id: 'SAU-8', file: 'SAU-08-test-cases.md' },
-  { id: 'SAU-9', file: 'SAU-09-test-cases.md' },
+  { id: 'SAU-7',  file: 'SAU-07-test-cases.md' },
+  { id: 'SAU-8',  file: 'SAU-08-test-cases.md' },
+  { id: 'SAU-9',  file: 'SAU-09-test-cases.md' },
   { id: 'SAU-10', file: 'SAU-10-test-cases.md' },
   { id: 'SAU-11', file: 'SAU-11-test-cases.md' },
   { id: 'SAU-48', file: 'SAU-48-test-cases.md' },
+  { id: 'SAU-28', file: 'SAU-28-test-cases.md' },
+  { id: 'SAU-29', file: 'SAU-29-test-cases.md' },
+  { id: 'SAU-30', file: 'SAU-30-test-cases.md' },
 ];
 
 // GraphQL query to fetch issue + comments
