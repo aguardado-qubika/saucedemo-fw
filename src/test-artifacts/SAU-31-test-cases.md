@@ -2,7 +2,7 @@
 
 **Linear:** https://linear.app/saucedemo-qa/issue/SAU-31/user-can-add-a-product-to-the-cart
 **Project:** SauceDemo Test Automation
-**Status:** Backlog
+**Status:** Done
 
 ---
 
@@ -28,6 +28,7 @@ _No test cases found._
 
 | Date | Type | Result | Executed by |
 |------|------|--------|-------------|
+| 2026-04-13 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-13 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-13 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
