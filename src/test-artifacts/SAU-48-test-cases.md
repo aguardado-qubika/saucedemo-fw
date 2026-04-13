@@ -99,6 +99,7 @@ TC-008 — User can sort products by price (low to high)
 | 2026-04-09 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-10 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-13 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-13 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---
 
