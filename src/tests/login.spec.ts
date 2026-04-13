@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { USERS, MESSAGES } from '../utils/test-data';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29', () => {
+test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30', () => {
 
     // TC-001 — SAU-7
     test('TC-001 — should login successfully with valid credentials',
@@ -104,6 +104,23 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29', () => {
         async ({ loginPage, inventoryPage }) => {
             qase.id(10);
             qase.title('Valid login redirects to inventory with Products title');
+        });
+
+    // TC-011 — SAU-30
+    test('TC-011 — should show locked out error and remain on login page',
+        async ({ loginPage, page }) => {
+            qase.id(11);
+            qase.title('Locked out user sees error and stays on login page');
+
+            await loginPage.loginWith(
+                USERS.locked.username,
+                USERS.locked.password
+            );
+
+            await expect(loginPage.getErrorMessage()).toBeVisible();
+            await expect(loginPage.getErrorMessage())
+                .toContainText(MESSAGES.lockedOut);
+            await expect(page).toHaveURL('/');
         });
 
 });

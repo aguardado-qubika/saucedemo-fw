@@ -39,6 +39,7 @@ export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-008': ['SAU-48'],
   'TC-009': ['SAU-29'],
   'TC-010': ['SAU-28'],
+  'TC-011': ['SAU-30'],
 };
 
 // Single source of truth for TC → Linear issue title mapping
@@ -55,6 +56,7 @@ export const LINEAR_ISSUES: Array<{
   { id: 'SAU-48', title: 'User can sort products by price',                    tcs: ['TC-008'] },
   { id: 'SAU-29', title: 'User cannot log in with invalid credentials',        tcs: ['TC-009'] },
   { id: 'SAU-28', title: 'User can log in with valid credentials',             tcs: ['TC-010'] },
+  { id: 'SAU-30', title: 'Locked out user cannot access the application',      tcs: ['TC-011'] },
 ];
 
 // Single source of truth for Qase case ID → TC ID mapping
@@ -69,4 +71,5 @@ export const QASE_TO_TC: Record<number, string> = {
   8: 'TC-008',
   9: 'TC-009',
   10: 'TC-010',
+  11: 'TC-011',
 };
