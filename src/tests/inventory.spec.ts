@@ -69,6 +69,56 @@ test.describe('Inventory Page — SAU-34', () => {
 
 });
 
+test.describe('Inventory Page — SAU-38', () => {
+
+  // TC-028 — SAU-38
+  test('TC-028 — should default to Z to A sort order on page load',
+    async ({ loggedInPage }) => {
+      qase.id(28);
+      qase.title('Default sort order on page load is Z to A');
+
+      const names = await loggedInPage.getProductNames();
+      expect(names.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < names.length - 1; i++) {
+        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+      }
+    });
+
+  // TC-029 — SAU-38
+  test('TC-029 — should sort products A to Z when selected',
+    async ({ loggedInPage }) => {
+      qase.id(29);
+      qase.title('Selecting Name (A to Z) sorts products A to Z');
+
+      await loggedInPage.sortBy('az');
+
+      const names = await loggedInPage.getProductNames();
+      expect(names.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < names.length - 1; i++) {
+        expect(names[i].localeCompare(names[i + 1])).toBeLessThanOrEqual(0);
+      }
+    });
+
+  // TC-030 — SAU-38
+  test('TC-030 — should sort products Z to A when selected',
+    async ({ loggedInPage }) => {
+      qase.id(30);
+      qase.title('Selecting Name (Z to A) sorts products Z to A');
+
+      await loggedInPage.sortBy('za');
+
+      const names = await loggedInPage.getProductNames();
+      expect(names.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < names.length - 1; i++) {
+        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+      }
+    });
+
+});
+
 test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
   // TC-006 — SAU-10

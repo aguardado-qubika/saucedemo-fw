@@ -37,6 +37,7 @@ src/
 | SAU-35 | User can log out of the application | logout.spec.ts |
 | SAU-36 | Fix the cart | cart.spec.ts |
 | SAU-37 | Improve the entire checkout flow | checkout.spec.ts |
+| SAU-38 | Product sort should default to Z to A | inventory.spec.ts |
 
 ---
 
