@@ -61,6 +61,7 @@ Framework correctly identified no prior logout coverage existed. TC-020 asserts 
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-14 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
 
 ---
 

@@ -68,6 +68,7 @@ As a registered user, I want to see a clear error message when I enter wrong cre
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-14 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
 
 ---
 
