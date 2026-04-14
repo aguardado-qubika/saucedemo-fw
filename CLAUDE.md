@@ -47,6 +47,8 @@ Skills are registered in `.claude/skills/` and available as slash commands.
 | Command | Trigger phrase | Purpose |
 |---------|---------------|---------|
 | `/tc-run` | "run tests" | Run Playwright suite + capture evidence |
+| `/tc-sync-qase` | "sync qase cases" | Ensure all TCs in test-data.ts exist in Qase |
+| `/tc-report-qase` | "report to qase" | Post latest run results to Qase (requires /tc-run first) |
 | `/tc-notify-linear` | "notify Linear" | Post results to Linear issues |
 | `/tc-generate-artifacts` | "generate artifacts" | Regenerate .md files from Linear |
 | `/tc-full-cycle` | "run everything" | Tests + evidence + Linear in one command |
@@ -63,6 +65,9 @@ Each step depends on the previous:
 
 ⚠️ Never run /tc-generate-artifacts before /tc-notify-linear — the .md files
 will contain stale execution history if Linear has not been updated yet.
+
+Run /tc-sync-qase whenever new test cases are added to test-data.ts — this is
+a one-time setup step per TC, not part of every QA cycle.
 
 Use /tc-full-cycle to run all 4 steps automatically in the correct order.
 

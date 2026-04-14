@@ -1,9 +1,19 @@
 ---
 name: tc-report-qase
-description: Post test results to Qase on demand. Use when asked to report to qase, post results to qase, or send to qase. Works independently of the test run.
+description: Post test results to Qase on demand. Use when asked to report to qase, post results to qase, or send to qase. Requires /tc-run to have completed first.
 ---
 
 Post the latest test run results to Qase by creating a new test run via API.
+
+## Prerequisites
+
+**`/tc-run` must complete before this skill.** This skill reads evidence produced by `/tc-run` — if no run has occurred, or the evidence folder is missing, it will fail or post stale results.
+
+If `/tc-run` has not been run yet, run it first:
+```
+/tc-run
+```
+Then return to this skill.
 
 ## Steps
 
@@ -20,9 +30,8 @@ Post the latest test run results to Qase by creating a new test run via API.
    - Direct URL to the Qase run
 
 ## Notes
-- Reads results from latest evidence/summary.md automatically
+- Reads results from latest `evidence/YYYY-MM-DD/run-N/summary.md` automatically
 - Creates a brand new Qase test run — does not modify existing runs
-- Works independently of QASE_MODE=testops
 - Requires QASE_TESTOPS_API_TOKEN in .env
 
 ## ⚠️ Duplicate run warning

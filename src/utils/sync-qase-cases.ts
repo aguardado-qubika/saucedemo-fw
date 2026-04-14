@@ -17,15 +17,22 @@ if (!TOKEN) {
 
 // Suite ID mapping — matches Qase project STA
 const SUITE_MAP: Record<string, number> = {
-  'SAU-7': 1, // Login
-  'SAU-8': 1, // Login
-  'SAU-9': 1, // Login
-  'SAU-10': 2, // Inventory
-  'SAU-11': 3, // Checkout
-  'SAU-48': 2, // Inventory
+  'SAU-7':  1, // Login
+  'SAU-8':  1, // Login
+  'SAU-9':  1, // Login
   'SAU-28': 1, // Login
   'SAU-29': 1, // Login
   'SAU-30': 1, // Login
+  'SAU-10': 2, // Inventory
+  'SAU-31': 2, // Inventory
+  'SAU-34': 2, // Inventory
+  'SAU-48': 2, // Inventory
+  'SAU-11': 3, // Checkout
+  'SAU-32': 3, // Checkout
+  'SAU-37': 3, // Checkout
+  'SAU-33': 4, // Cart
+  'SAU-36': 4, // Cart
+  'SAU-35': 5, // Logout
 };
 
 // TC → suite ID lookup
