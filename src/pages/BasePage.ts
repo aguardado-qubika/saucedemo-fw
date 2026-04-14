@@ -2,6 +2,12 @@ import { Page } from '@playwright/test';
 import fs from 'fs';
 import { getCurrentRunFolder } from '../utils/run-counter';
 
+// Module-level TC context — safe with workers: 1 (sequential execution)
+let _currentTcId = '';
+export function setCurrentTestId(tcId: string): void {
+  _currentTcId = tcId;
+}
+
 export class BasePage {
   protected readonly page: Page;
   private screenshotFolder: string;
@@ -19,8 +25,12 @@ export class BasePage {
   }
 
   async takeScreenshot(name: string): Promise<void> {
+    const folder = _currentTcId
+      ? `${this.screenshotFolder}/${_currentTcId}`
+      : this.screenshotFolder;
+    fs.mkdirSync(folder, { recursive: true });
     await this.page.screenshot({
-      path: `${this.screenshotFolder}/${name}.png`,
+      path: `${folder}/${name}.png`,
       fullPage: true,
     });
   }

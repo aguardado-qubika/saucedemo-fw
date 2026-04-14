@@ -3,6 +3,7 @@ import { LoginPage }     from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage }      from '../pages/CartPage';
 import { CheckoutPage }  from '../pages/CheckoutPage';
+import { setCurrentTestId } from '../pages/BasePage';
 
 // Define the shape of all our fixtures
 type MyFixtures = {
@@ -11,9 +12,19 @@ type MyFixtures = {
   cartPage:      CartPage;
   checkoutPage:  CheckoutPage;
   loggedInPage:  InventoryPage;
+  _tcContext:    void;
 };
 
 export const test = base.extend<MyFixtures>({
+
+  // ── _tcContext fixture (auto) ──────────────────────────────────────
+  // Extracts TC ID from test title and sets the per-test screenshot subfolder
+  _tcContext: [async ({}, use, testInfo) => {
+    const match = testInfo.title.match(/^(TC-\d+)/);
+    setCurrentTestId(match ? match[1] : '');
+    await use();
+    setCurrentTestId('');
+  }, { auto: true }],
 
   // ── loginPage fixture ──────────────────────────────────────────────
   loginPage: async ({ page }, use) => {
