@@ -33,16 +33,21 @@ const SUITE_MAP: Record<string, number> = {
   'SAU-33': 4, // Cart
   'SAU-36': 4, // Cart
   'SAU-35': 5, // Logout
+  'SAU-38': 2, // Inventory
 };
 
 // TC → suite ID lookup
 function getSuiteId(tc: string): number {
   for (const issue of LINEAR_ISSUES) {
     if (issue.tcs.includes(tc)) {
-      return SUITE_MAP[issue.id] || 1;
+      const suiteId = SUITE_MAP[issue.id];
+      if (suiteId === undefined) {
+        throw new Error(`No SUITE_MAP entry for ${issue.id} (contains ${tc}) — add it to SUITE_MAP before syncing`);
+      }
+      return suiteId;
     }
   }
-  return 1;
+  throw new Error(`${tc} not found in LINEAR_ISSUES — add it to test-data.ts before syncing`);
 }
 
 // Auto-update QASE_TO_TC in test-data.ts
