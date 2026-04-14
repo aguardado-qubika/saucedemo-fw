@@ -26,6 +26,7 @@ const ISSUES = [
   { id: 'SAU-32', file: 'SAU-32-test-cases.md' },
   { id: 'SAU-33', file: 'SAU-33-test-cases.md' },
   { id: 'SAU-34', file: 'SAU-34-test-cases.md' },
+  { id: 'SAU-35', file: 'SAU-35-test-cases.md' },
 ];
 
 // GraphQL query to fetch issue + comments
