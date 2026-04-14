@@ -25,7 +25,7 @@ The product sort on the inventory page should default to Z to A when the page lo
 **Result:** ✅ Excellent
 
 **Branch:** `agentic-framework-evaluation` (committed directly — no feature branch ⚠️)
-**Commit:** TBD
+**Commit:** `b07d6c2`
 **Files changed:** 4
 - `CLAUDE.md` — SAU-38 added to Linear Issues table
 - `src/tests/inventory.spec.ts` — TC-028, TC-029, TC-030 added in new SAU-38 describe block
