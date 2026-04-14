@@ -23,6 +23,13 @@ export class InventoryPage extends BasePage {
         await this.takeScreenshot('05-product-added-to-cart');
     }
 
+    async removeFirstProductFromCart(): Promise<void> {
+        await this.page
+            .locator('[data-test="remove-sauce-labs-backpack"]')
+            .click();
+        await this.takeScreenshot('05b-product-removed-from-cart');
+    }
+
     async goToCart(): Promise<void> {
         await this.cartIcon.click();
         await this.takeScreenshot('06-cart-opened');

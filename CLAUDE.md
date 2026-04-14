@@ -32,6 +32,7 @@ src/
 | SAU-30 | Locked out user cannot access the application | login.spec.ts |
 | SAU-31 | User can add a product to the cart | inventory.spec.ts |
 | SAU-32 | User can complete the checkout process | checkout.spec.ts |
+| SAU-33 | User can remove a product from the cart | cart.spec.ts |
 
 ---
 

@@ -17,6 +17,13 @@ export class CartPage extends BasePage {
     await this.takeScreenshot('07-checkout-started');
   }
 
+  async removeFirstItem(): Promise<void> {
+    await this.page
+      .locator('[data-test="remove-sauce-labs-backpack"]')
+      .click();
+    await this.takeScreenshot('06b-item-removed-from-cart');
+  }
+
   getCartItems(): Locator {
     return this.cartItems;
   }
