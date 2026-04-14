@@ -7,6 +7,8 @@ export class InventoryPage extends BasePage {
     private readonly productItems: Locator;
     private readonly cartBadge: Locator;
     private readonly cartIcon: Locator;
+    private readonly burgerMenuButton: Locator;
+    private readonly logoutLink: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -14,6 +16,8 @@ export class InventoryPage extends BasePage {
         this.productItems = page.locator('[data-test="inventory-item"]');
         this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
         this.cartIcon = page.locator('[data-test="shopping-cart-link"]');
+        this.burgerMenuButton = page.locator('#react-burger-menu-btn');
+        this.logoutLink = page.locator('#logout_sidebar_link');
     }
 
     async addFirstProductToCart(): Promise<void> {
@@ -70,5 +74,12 @@ export class InventoryPage extends BasePage {
             names.push(await el.innerText());
         }
         return names;
+    }
+
+    async logout(): Promise<void> {
+        await this.burgerMenuButton.click();
+        await this.takeScreenshot('20-burger-menu-opened');
+        await this.logoutLink.click();
+        await this.takeScreenshot('21-logged-out');
     }
 }
