@@ -62,4 +62,13 @@ export class InventoryPage extends BasePage {
         }
         return prices;
     }
+
+    async getProductNames(): Promise<string[]> {
+        const nameElements = await this.page.locator('[data-test="inventory-item-name"]').all();
+        const names: string[] = [];
+        for (const el of nameElements) {
+            names.push(await el.innerText());
+        }
+        return names;
+    }
 }

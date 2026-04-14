@@ -1,6 +1,74 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { qase } from 'playwright-qase-reporter';
 
+test.describe('Inventory Page — SAU-34', () => {
+
+  // TC-016 — SAU-34
+  test('TC-016 — should sort products by name A to Z',
+    async ({ loggedInPage }) => {
+      qase.id(16);
+      qase.title('User can sort products by name A to Z');
+
+      await loggedInPage.sortBy('az');
+
+      const names = await loggedInPage.getProductNames();
+      expect(names.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < names.length - 1; i++) {
+        expect(names[i].localeCompare(names[i + 1])).toBeLessThanOrEqual(0);
+      }
+    });
+
+  // TC-017 — SAU-34
+  test('TC-017 — should sort products by name Z to A',
+    async ({ loggedInPage }) => {
+      qase.id(17);
+      qase.title('User can sort products by name Z to A');
+
+      await loggedInPage.sortBy('za');
+
+      const names = await loggedInPage.getProductNames();
+      expect(names.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < names.length - 1; i++) {
+        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+      }
+    });
+
+  // TC-018 — SAU-34
+  test('TC-018 — should sort products by price low to high',
+    async ({ loggedInPage }) => {
+      qase.id(18);
+      qase.title('User can sort products by price low to high');
+
+      await loggedInPage.sortBy('lohi');
+
+      const prices = await loggedInPage.getProductPrices();
+      expect(prices.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < prices.length - 1; i++) {
+        expect(prices[i]).toBeLessThanOrEqual(prices[i + 1]);
+      }
+    });
+
+  // TC-019 — SAU-34
+  test('TC-019 — should sort products by price high to low',
+    async ({ loggedInPage }) => {
+      qase.id(19);
+      qase.title('User can sort products by price high to low');
+
+      await loggedInPage.sortBy('hilo');
+
+      const prices = await loggedInPage.getProductPrices();
+      expect(prices.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < prices.length - 1; i++) {
+        expect(prices[i]).toBeGreaterThanOrEqual(prices[i + 1]);
+      }
+    });
+
+});
+
 test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
   // TC-006 — SAU-10
