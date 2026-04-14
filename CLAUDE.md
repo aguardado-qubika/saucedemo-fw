@@ -35,6 +35,7 @@ src/
 | SAU-33 | User can remove a product from the cart | cart.spec.ts |
 | SAU-34 | User can sort products on the inventory page | inventory.spec.ts |
 | SAU-35 | User can log out of the application | logout.spec.ts |
+| SAU-36 | Fix the cart | cart.spec.ts |
 
 ---
 
