@@ -106,3 +106,52 @@ test.describe('Checkout — SAU-37', () => {
   });
 
 });
+
+test.describe('Checkout — SAU-40', () => {
+
+  // TC-035 — SAU-40
+  test('TC-035 — should display error when first name is missing',
+    async ({ loggedInPage, cartPage, checkoutPage }) => {
+    qase.id(35);
+    qase.title('Display error when first name is missing');
+
+    await loggedInPage.addFirstProductToCart();
+    await loggedInPage.goToCart();
+    await cartPage.proceedToCheckout();
+    await checkoutPage.submitCheckoutForm('', 'User', '12345');
+
+    await expect(checkoutPage.getErrorMessage())
+      .toHaveText('Error: First Name is required');
+  });
+
+  // TC-036 — SAU-40
+  test('TC-036 — should display error when last name is missing',
+    async ({ loggedInPage, cartPage, checkoutPage }) => {
+    qase.id(36);
+    qase.title('Display error when last name is missing');
+
+    await loggedInPage.addFirstProductToCart();
+    await loggedInPage.goToCart();
+    await cartPage.proceedToCheckout();
+    await checkoutPage.submitCheckoutForm('Test', '', '12345');
+
+    await expect(checkoutPage.getErrorMessage())
+      .toHaveText('Error: Last Name is required');
+  });
+
+  // TC-037 — SAU-40
+  test('TC-037 — should display error when postal code is missing',
+    async ({ loggedInPage, cartPage, checkoutPage }) => {
+    qase.id(37);
+    qase.title('Display error when postal code is missing');
+
+    await loggedInPage.addFirstProductToCart();
+    await loggedInPage.goToCart();
+    await cartPage.proceedToCheckout();
+    await checkoutPage.submitCheckoutForm('Test', 'User', '');
+
+    await expect(checkoutPage.getErrorMessage())
+      .toHaveText('Error: Postal Code is required');
+  });
+
+});

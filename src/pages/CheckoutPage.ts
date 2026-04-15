@@ -40,6 +40,18 @@ export class CheckoutPage extends BasePage {
     await this.takeScreenshot('09-order-summary');
   }
 
+  async submitCheckoutForm(
+    firstName: string,
+    lastName: string,
+    zipCode: string
+  ): Promise<void> {
+    await this.firstNameInput.fill(firstName);
+    await this.lastNameInput.fill(lastName);
+    await this.zipCodeInput.fill(zipCode);
+    await this.continueButton.click();
+    await this.takeScreenshot('09-checkout-submitted');
+  }
+
   async clickCancel(): Promise<void> {
     await this.cancelButton.click();
     await this.takeScreenshot('checkout-cancelled');
