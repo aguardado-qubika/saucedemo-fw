@@ -74,6 +74,7 @@ test.describe('Inventory Page — SAU-38', () => {
   // TC-028 — SAU-38
   test('TC-028 — should default to Z to A sort order on page load',
     async ({ loggedInPage }) => {
+      test.fail(); // SAU-38: SauceDemo defaults to A to Z — expected failure documenting the bug
       qase.id(28);
       qase.title('Default sort order on page load is Z to A');
 
