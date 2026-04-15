@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { TC_TO_LINEAR, QASE_TO_TC } from './test-data';
+import { TC_TO_LINEAR, QASE_TO_TC, XFAIL_TCS } from './test-data';
 
 dotenv.config();
 
@@ -120,11 +120,15 @@ async function fetchRunResults(runId: number): Promise<Array<{
 
   return data.result.entities
     .filter((r: any) => QASE_TO_TC[r.case_id])
-    .map((r: any) => ({
-      tc:       QASE_TO_TC[r.case_id],
-      status:   r.status === 'passed' ? 'PASSED' : 'FAILED',
-      duration: r.time_ms ? `${(r.time_ms / 1000).toFixed(1)}s` : '—',
-    }));
+    .map((r: any) => {
+      const tc = QASE_TO_TC[r.case_id];
+      const isKnownBug = r.status !== 'passed' && XFAIL_TCS.has(tc);
+      return {
+        tc,
+        status:   r.status === 'passed' ? 'PASSED' : isKnownBug ? 'KNOWN BUG' : 'FAILED',
+        duration: r.time_ms ? `${(r.time_ms / 1000).toFixed(1)}s` : '—',
+      };
+    });
 }
 
 // Post comment to Linear issue
@@ -182,16 +186,18 @@ function buildComment(
   results: Array<{ tc: string; status: string; duration: string }>,
   relevantTCs: string[]
 ): string {
-  const icon = run.stats.failed === 0 ? '✅' : '❌';
-  const type = run.stats.failed === 0 ? 'PASSED' : 'FAILED';
+  // Determine overall status from results — KNOWN BUG does not count as a failure
+  const hasUnexpectedFailure = results.some(r => r.status === 'FAILED');
+  const icon = hasUnexpectedFailure ? '❌' : '✅';
+  const type = hasUnexpectedFailure ? 'FAILED' : 'PASSED';
   const date = new Date().toISOString().split('T')[0];
 
   const tcLines = relevantTCs.map(tc => {
     const result = results.find(r => r.tc === tc);
     const status = result ? result.status : 'NOT RUN';
     const dur    = result ? ` (${result.duration})` : '';
-    const icon   = status === 'PASSED' ? '✅' : '❌';
-    return `${icon} ${tc} — ${status}${dur}`;
+    const tcIcon = status === 'PASSED' ? '✅' : status === 'KNOWN BUG' ? '⚠️' : '❌';
+    return `${tcIcon} ${tc} — ${status}${dur}`;
   }).join('\n');
 
   return [

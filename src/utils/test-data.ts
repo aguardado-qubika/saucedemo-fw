@@ -44,6 +44,12 @@ export const URLS = {
   checkout:  '/checkout-step-one.html',
 } as const;
 
+// TCs with test.fail() — expected failures documenting known bugs.
+// Adding a TC here suppresses it from the failure count in reporter and notify-linear.
+export const XFAIL_TCS = new Set<string>([
+  'TC-028', // SAU-38: SauceDemo defaults to A to Z; requirement says Z to A
+]);
+
 // Single source of truth for TC → Linear issue mapping
 export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-001': ['SAU-7'],

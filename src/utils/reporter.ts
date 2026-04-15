@@ -9,13 +9,13 @@ import type {
 import fs from 'fs';
 import path from 'path';
 import { getNextRunFolder, setCurrentRunFolder } from './run-counter';
-import { LINEAR_ISSUES } from './test-data';
+import { LINEAR_ISSUES, XFAIL_TCS } from './test-data';
 
 
 class LinearReporter implements Reporter {
     private initialized = false;
     private runFolder: string = '';
-    private results: Array<{ title: string; status: string; duration: number }> = [];
+    private results: Array<{ title: string; status: 'passed' | 'xfailed' | 'failed' | string; duration: number }> = [];
     private startTime: Date = new Date();
 
     onBegin(config: FullConfig, suite: Suite): void {
@@ -35,20 +35,23 @@ class LinearReporter implements Reporter {
     }
 
     onTestEnd(test: TestCase, result: TestResult): void {
-        const status = result.status === 'passed' ? '✅' : '❌';
+        const isXfail = test.expectedStatus === 'failed' && result.status === 'failed';
+        const resolvedStatus = isXfail ? 'xfailed' : result.status;
+        const icon = resolvedStatus === 'passed' ? '✅' : resolvedStatus === 'xfailed' ? '⚠️' : '❌';
         const duration = (result.duration / 1000).toFixed(1);
         this.results.push({
             title: test.title,
-            status: result.status,
+            status: resolvedStatus,
             duration: result.duration,
         });
-        console.log(`${status} ${test.title} (${duration}s)`);
+        console.log(`${icon} ${test.title} (${duration}s)`);
     }
 
     onEnd(result: FullResult): void {
-        const passed = this.results.filter(r => r.status === 'passed').length;
-        const failed = this.results.filter(r => r.status === 'failed').length;
-        const total = this.results.length;
+        const passed  = this.results.filter(r => r.status === 'passed').length;
+        const xfailed = this.results.filter(r => r.status === 'xfailed').length;
+        const failed  = this.results.filter(r => r.status !== 'passed' && r.status !== 'xfailed').length;
+        const total   = this.results.length;
         const duration = ((Date.now() - this.startTime.getTime()) / 1000).toFixed(1);
         const date = new Date().toISOString().split('T')[0];
 
@@ -66,6 +69,7 @@ class LinearReporter implements Reporter {
             `|--------|-------|`,
             `| Total  | ${total} |`,
             `| Passed | ${passed} |`,
+            ...(xfailed > 0 ? [`| Expected failures (known bugs) | ${xfailed} |`] : []),
             `| Failed | ${failed} |`,
             `| Duration | ${duration}s |`,
             `| Status | ${failed === 0 ? '✅ ALL PASSED' : '❌ FAILURES FOUND'} |`,
@@ -77,7 +81,7 @@ class LinearReporter implements Reporter {
         ];
 
         for (const r of this.results) {
-            const icon = r.status === 'passed' ? '✅' : '❌';
+            const icon = r.status === 'passed' ? '✅' : r.status === 'xfailed' ? '⚠️' : '❌';
             lines.push(`| ${r.title} | ${icon} ${r.status} | ${(r.duration / 1000).toFixed(1)}s |`);
         }
 
@@ -100,7 +104,8 @@ class LinearReporter implements Reporter {
 
         console.log(`\n📊 Summary: ${summaryPath}`);
         console.log(`📸 Screenshots: ${this.runFolder}/screenshots/`);
-        console.log(`\n${failed === 0 ? '✅' : '❌'} ${passed}/${total} passed in ${duration}s\n`);
+        const xfailNote = xfailed > 0 ? ` (${xfailed} known bug${xfailed > 1 ? 's' : ''})` : '';
+        console.log(`\n${failed === 0 ? '✅' : '❌'} ${passed}/${total} passed in ${duration}s${xfailNote}\n`);
     }
 }
 
