@@ -23,6 +23,40 @@ Acceptance Criteria:
 
 ## Test Cases
 
+✅ AUTOMATED TEST EXECUTION — PASSED
+Date: 2026-04-15
+Executed by: Playwright + TypeScript Framework
+Environment: https://www.saucedemo.com
+Browser: Chromium
+Framework: Playwright v1 + TypeScript
+
+RESULTS:
+✅ TC-002 — PASSED (—)
+✅ TC-003 — PASSED (—)
+✅ TC-004 — PASSED (—)
+
+Total: 36/37 passed
+Qase Run: https://app.qase.io/run/STA/dashboard/43
+
+---
+
+✅ AUTOMATED TEST EXECUTION — PASSED
+Date: 2026-04-15
+Executed by: Playwright + TypeScript Framework
+Environment: https://www.saucedemo.com
+Browser: Chromium
+Framework: Playwright v1 + TypeScript
+
+RESULTS:
+✅ TC-002 — PASSED (—)
+✅ TC-003 — PASSED (—)
+✅ TC-004 — PASSED (—)
+
+Total: 33/34 passed
+Qase Run: https://app.qase.io/run/STA/dashboard/42
+
+---
+
 ❌ AUTOMATED TEST EXECUTION — FAILED
 Date: 2026-04-15
 Executed by: Playwright + TypeScript Framework
@@ -651,6 +685,8 @@ EXPECTED RESULT:
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---

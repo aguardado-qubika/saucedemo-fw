@@ -70,6 +70,8 @@ Framework correctly identified TC-008 (SAU-48) already covered sort-by-price and
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
 | 2026-04-15 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---
 

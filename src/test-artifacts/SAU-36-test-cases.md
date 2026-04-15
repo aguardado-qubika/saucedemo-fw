@@ -59,6 +59,8 @@ Framework correctly identified existing cart coverage (TC-014, TC-015) before ad
 | 2026-04-14 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-14 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
 | 2026-04-15 | Automated | ❌ FAILED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-15 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---
 
