@@ -7,11 +7,28 @@ export const USERS = {
     username: 'locked_out_user',
     password: 'secret_sauce',
   },
+  problem: {
+    username: 'problem_user',
+    password: 'secret_sauce',
+  },
+  performance_glitch: {
+    username: 'performance_glitch_user',
+    password: 'secret_sauce',
+  },
   invalid: {
     username: 'invalid_user',
     password: 'wrong_password',
   },
 } as const;
+
+export type UserType = 'standard_user' | 'locked_out_user' | 'problem_user' | 'performance_glitch_user';
+
+export const USER_CREDENTIALS: Record<UserType, { username: string; password: string }> = {
+  standard_user:          { username: 'standard_user',          password: 'secret_sauce' },
+  locked_out_user:        { username: 'locked_out_user',        password: 'secret_sauce' },
+  problem_user:           { username: 'problem_user',           password: 'secret_sauce' },
+  performance_glitch_user:{ username: 'performance_glitch_user',password: 'secret_sauce' },
+};
 
 export const MESSAGES = {
   lockedOut:        'Epic sadface: Sorry, this user has been locked out.',
@@ -59,6 +76,10 @@ export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-028': ['SAU-38'],
   'TC-029': ['SAU-38'],
   'TC-030': ['SAU-38'],
+  'TC-031': ['SAU-39'],
+  'TC-032': ['SAU-39'],
+  'TC-033': ['SAU-39'],
+  'TC-034': ['SAU-39'],
 };
 
 // Single source of truth for TC → Linear issue title mapping
@@ -83,7 +104,8 @@ export const LINEAR_ISSUES: Array<{
   { id: 'SAU-35', title: 'User can log out of the application',               tcs: ['TC-020', 'TC-021'] },
   { id: 'SAU-36', title: 'Fix the cart',                                      tcs: ['TC-022', 'TC-023'] },
   { id: 'SAU-37', title: 'Improve the entire checkout flow',                 tcs: ['TC-024', 'TC-025', 'TC-026', 'TC-027'] },
-  { id: 'SAU-38', title: 'Product sort should default to Z to A',           tcs: ['TC-028', 'TC-029', 'TC-030'] },
+  { id: 'SAU-38', title: 'Product sort should default to Z to A',                                         tcs: ['TC-028', 'TC-029', 'TC-030'] },
+  { id: 'SAU-39', title: 'Refactor login helper to support all saucedemo.com user types',                tcs: ['TC-031', 'TC-032', 'TC-033', 'TC-034'] },
 ];
 
 // Single source of truth for Qase case ID → TC ID mapping
@@ -118,4 +140,8 @@ export const QASE_TO_TC: Record<number, string> = {
   28: 'TC-028',
   29: 'TC-029',
   30: 'TC-030',
+  31: 'TC-031',
+  32: 'TC-032',
+  33: 'TC-033',
+  34: 'TC-034',
 };

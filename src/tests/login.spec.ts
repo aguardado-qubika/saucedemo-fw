@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { USERS, MESSAGES } from '../utils/test-data';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30', () => {
+test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-39', () => {
 
     // TC-001 — SAU-7
     test('TC-001 — should login successfully with valid credentials',
@@ -121,6 +121,53 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30', () =
             await expect(loginPage.getErrorMessage())
                 .toContainText(MESSAGES.lockedOut);
             await expect(page).toHaveURL('/');
+        });
+
+    // TC-031 — SAU-39
+    test('TC-031 — standard_user can log in successfully',
+        async ({ loginPage, inventoryPage }) => {
+            qase.id(31);
+            qase.title('standard_user login succeeds and reaches inventory');
+
+            await loginPage.loginAs('standard_user');
+
+            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+        });
+
+    // TC-032 — SAU-39
+    test('TC-032 — problem_user can log in successfully',
+        async ({ loginPage, inventoryPage }) => {
+            qase.id(32);
+            qase.title('problem_user login succeeds and reaches inventory');
+
+            await loginPage.loginAs('problem_user');
+
+            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+        });
+
+    // TC-033 — SAU-39
+    test('TC-033 — locked_out_user cannot log in',
+        async ({ loginPage }) => {
+            qase.id(33);
+            qase.title('locked_out_user login is blocked with error message');
+
+            await loginPage.loginAs('locked_out_user');
+
+            await expect(loginPage.getErrorMessage()).toBeVisible();
+            await expect(loginPage.getErrorMessage())
+                .toContainText(MESSAGES.lockedOut);
+        });
+
+    // TC-034 — SAU-39
+    test('TC-034 — performance_glitch_user can log in with delayed response',
+        async ({ loginPage, inventoryPage }) => {
+            test.setTimeout(60000);
+            qase.id(34);
+            qase.title('performance_glitch_user login eventually succeeds');
+
+            await loginPage.loginAs('performance_glitch_user');
+
+            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
         });
 
 });

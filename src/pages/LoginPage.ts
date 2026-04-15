@@ -1,11 +1,12 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { UserType, USER_CREDENTIALS } from '../utils/test-data';
 
 export class LoginPage extends BasePage {
 
     private readonly usernameInput: Locator;
     private readonly passwordInput: Locator;
-    private readonly loginButton: Locator;ß
+    private readonly loginButton: Locator;
     private readonly errorMessage: Locator;
 
     constructor(page: Page) {
@@ -42,6 +43,11 @@ export class LoginPage extends BasePage {
         await this.fillUsername(username);
         await this.fillPassword(password);
         await this.clickLogin();
+    }
+
+    async loginAs(userType: UserType): Promise<void> {
+        const { username, password } = USER_CREDENTIALS[userType];
+        await this.loginWith(username, password);
     }
 
     getErrorMessage(): Locator {

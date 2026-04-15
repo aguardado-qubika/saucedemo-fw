@@ -38,6 +38,7 @@ src/
 | SAU-36 | Fix the cart | cart.spec.ts |
 | SAU-37 | Improve the entire checkout flow | checkout.spec.ts |
 | SAU-38 | Product sort should default to Z to A | inventory.spec.ts |
+| SAU-39 | Refactor login helper to support all saucedemo.com user types | login.spec.ts |
 
 ---
 
