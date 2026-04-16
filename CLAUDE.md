@@ -41,6 +41,7 @@ src/
 | SAU-39 | Refactor login helper to support all saucedemo.com user types | login.spec.ts |
 | SAU-40 | Add checkout form validation error coverage to the checkout step helper | checkout.spec.ts |
 | SAU-56 | User can view product details | product-detail.spec.ts |
+| SAU-57 | Cart badge count updates correctly when multiple items are added | cart.spec.ts |
 
 ---
 

@@ -89,6 +89,9 @@ export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-035': ['SAU-40'],
   'TC-036': ['SAU-40'],
   'TC-037': ['SAU-40'],
+  'TC-042': ['SAU-57'],
+  'TC-043': ['SAU-57'],
+  'TC-044': ['SAU-57'],
   'TC-038': ['SAU-56'],
   'TC-039': ['SAU-56'],
   'TC-040': ['SAU-56'],
@@ -121,6 +124,7 @@ export const LINEAR_ISSUES: Array<{
   { id: 'SAU-39', title: 'Refactor login helper to support all saucedemo.com user types',                tcs: ['TC-031', 'TC-032', 'TC-033', 'TC-034'] },
   { id: 'SAU-40', title: 'Add checkout form validation error coverage to the checkout step helper',     tcs: ['TC-035', 'TC-036', 'TC-037'] },
   { id: 'SAU-56', title: 'User can view product details',                                              tcs: ['TC-038', 'TC-039', 'TC-040', 'TC-041'] },
+  { id: 'SAU-57', title: 'Cart badge count updates correctly when multiple items are added',           tcs: ['TC-042', 'TC-043', 'TC-044'] },
 ];
 
 // Single source of truth for Qase case ID → TC ID mapping
@@ -162,6 +166,9 @@ export const QASE_TO_TC: Record<number, string> = {
   35: 'TC-035',
   36: 'TC-036',
   37: 'TC-037',
+  42: 'TC-042',
+  43: 'TC-043',
+  44: 'TC-044',
   38: 'TC-038',
   39: 'TC-039',
   40: 'TC-040',

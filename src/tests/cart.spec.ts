@@ -35,6 +35,50 @@ test.describe('Cart — SAU-33', () => {
 
 });
 
+test.describe('Cart badge — SAU-57', () => {
+
+  // TC-042 — SAU-57 (AC1)
+  test('TC-042 — badge increments to 2 when two products are added',
+    async ({ loggedInPage }) => {
+    qase.id(42);
+    qase.title('Cart badge shows 2 after adding two distinct products');
+
+    await loggedInPage.addNthProductToCart(0);
+    await loggedInPage.addNthProductToCart(1);
+
+    await expect(loggedInPage.getCartBadge()).toHaveText('2');
+  });
+
+  // TC-043 — SAU-57 (AC2)
+  test('TC-043 — badge increments to 3 when three products are added',
+    async ({ loggedInPage }) => {
+    qase.id(43);
+    qase.title('Cart badge shows 3 after adding three distinct products');
+
+    await loggedInPage.addNthProductToCart(0);
+    await loggedInPage.addNthProductToCart(1);
+    await loggedInPage.addNthProductToCart(2);
+
+    await expect(loggedInPage.getCartBadge()).toHaveText('3');
+  });
+
+  // TC-044 — SAU-57 (AC3)
+  test('TC-044 — badge decrements to 1 after removing one item from a 2-item cart',
+    async ({ loggedInPage }) => {
+    qase.id(44);
+    qase.title('Cart badge decrements correctly when one of two items is removed');
+
+    await loggedInPage.addNthProductToCart(0);
+    await loggedInPage.addNthProductToCart(1);
+    await expect(loggedInPage.getCartBadge()).toHaveText('2');
+
+    await loggedInPage.removeFirstProductFromCart();
+
+    await expect(loggedInPage.getCartBadge()).toHaveText('1');
+  });
+
+});
+
 test.describe('Cart — SAU-36', () => {
 
   // TC-022 — SAU-36 (AC1)
