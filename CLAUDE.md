@@ -40,6 +40,7 @@ src/
 | SAU-38 | Product sort should default to Z to A | inventory.spec.ts |
 | SAU-39 | Refactor login helper to support all saucedemo.com user types | login.spec.ts |
 | SAU-40 | Add checkout form validation error coverage to the checkout step helper | checkout.spec.ts |
+| SAU-56 | User can view product details | product-detail.spec.ts |
 
 ---
 

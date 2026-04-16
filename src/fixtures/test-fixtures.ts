@@ -1,18 +1,20 @@
 import { test as base, expect } from '@playwright/test';
-import { LoginPage }     from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage }      from '../pages/CartPage';
-import { CheckoutPage }  from '../pages/CheckoutPage';
+import { LoginPage }          from '../pages/LoginPage';
+import { InventoryPage }      from '../pages/InventoryPage';
+import { CartPage }           from '../pages/CartPage';
+import { CheckoutPage }       from '../pages/CheckoutPage';
+import { ProductDetailPage }  from '../pages/ProductDetailPage';
 import { setCurrentTestId } from '../pages/BasePage';
 
 // Define the shape of all our fixtures
 type MyFixtures = {
-  loginPage:     LoginPage;
-  inventoryPage: InventoryPage;
-  cartPage:      CartPage;
-  checkoutPage:  CheckoutPage;
-  loggedInPage:  InventoryPage;
-  _tcContext:    void;
+  loginPage:         LoginPage;
+  inventoryPage:     InventoryPage;
+  cartPage:          CartPage;
+  checkoutPage:      CheckoutPage;
+  productDetailPage: ProductDetailPage;
+  loggedInPage:      InventoryPage;
+  _tcContext:        void;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -44,6 +46,11 @@ export const test = base.extend<MyFixtures>({
   // ── checkoutPage fixture ───────────────────────────────────────────
   checkoutPage: async ({ page }, use) => {
     await use(new CheckoutPage(page));
+  },
+
+  // ── productDetailPage fixture ─────────────────────────────────
+  productDetailPage: async ({ page }, use) => {
+    await use(new ProductDetailPage(page));
   },
 
   // ── loggedInPage fixture ───────────────────────────────────────────

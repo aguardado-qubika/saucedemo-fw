@@ -76,6 +76,14 @@ export class InventoryPage extends BasePage {
         return names;
     }
 
+    async goToFirstProduct(): Promise<void> {
+        await this.page
+            .locator('[data-test="inventory-item-name"]')
+            .first()
+            .click();
+        await this.takeScreenshot('01-product-detail-page');
+    }
+
     async logout(): Promise<void> {
         await this.burgerMenuButton.click();
         await this.takeScreenshot('20-burger-menu-opened');
