@@ -96,6 +96,7 @@ export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-039': ['SAU-56'],
   'TC-040': ['SAU-56'],
   'TC-041': ['SAU-56'],
+  'TC-045': ['SAU-58'],
 };
 
 // Single source of truth for TC → Linear issue title mapping
@@ -125,6 +126,7 @@ export const LINEAR_ISSUES: Array<{
   { id: 'SAU-40', title: 'Add checkout form validation error coverage to the checkout step helper',     tcs: ['TC-035', 'TC-036', 'TC-037'] },
   { id: 'SAU-56', title: 'User can view product details',                                              tcs: ['TC-038', 'TC-039', 'TC-040', 'TC-041'] },
   { id: 'SAU-57', title: 'Cart badge count updates correctly when multiple items are added',           tcs: ['TC-042', 'TC-043', 'TC-044'] },
+  { id: 'SAU-58', title: 'Performance glitch user — checkout completes despite slow load',            tcs: ['TC-045'] },
 ];
 
 // Single source of truth for Qase case ID → TC ID mapping
@@ -173,4 +175,5 @@ export const QASE_TO_TC: Record<number, string> = {
   39: 'TC-039',
   40: 'TC-040',
   41: 'TC-041',
+  45: 'TC-045',
 };

@@ -42,6 +42,7 @@ src/
 | SAU-40 | Add checkout form validation error coverage to the checkout step helper | checkout.spec.ts |
 | SAU-56 | User can view product details | product-detail.spec.ts |
 | SAU-57 | Cart badge count updates correctly when multiple items are added | cart.spec.ts |
+| SAU-58 | Performance glitch user — checkout completes despite slow load | checkout.spec.ts |
 
 ---
 

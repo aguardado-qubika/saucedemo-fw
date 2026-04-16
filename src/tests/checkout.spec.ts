@@ -107,6 +107,30 @@ test.describe('Checkout — SAU-37', () => {
 
 });
 
+test.describe('Checkout — SAU-58', () => {
+
+  // TC-045 — SAU-58
+  test('TC-045 — performance_glitch_user checkout completes despite slow load',
+    async ({ loginPage, inventoryPage, cartPage, checkoutPage }) => {
+    test.setTimeout(60000);
+    qase.id(45);
+    qase.title('performance_glitch_user checkout completes despite slow load');
+
+    await loginPage.loginAs('performance_glitch_user');
+    await inventoryPage.addFirstProductToCart();
+    await inventoryPage.goToCart();
+
+    await cartPage.proceedToCheckout();
+    await checkoutPage.fillShippingInfo('Test', 'User', '12345');
+    await checkoutPage.clickContinue();
+    await checkoutPage.clickFinish();
+
+    await expect(checkoutPage.getConfirmationTitle())
+      .toHaveText('Thank you for your order!');
+  });
+
+});
+
 test.describe('Checkout — SAU-40', () => {
 
   // TC-035 — SAU-40
