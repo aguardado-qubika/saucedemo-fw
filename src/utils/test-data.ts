@@ -181,4 +181,6 @@ export const QASE_TO_TC: Record<number, string> = {
   40: 'TC-040',
   41: 'TC-041',
   45: 'TC-045',
+  46: 'TC-046',
+  47: 'TC-047',
 };
