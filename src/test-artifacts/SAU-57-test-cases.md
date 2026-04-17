@@ -142,6 +142,7 @@ All 3 test cases passed on 2026-04-16 (Automated / Playwright).
 |------|------|--------|-------------|
 | 2026-04-16 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-16 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-17 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---
 
@@ -150,4 +151,4 @@ All 3 test cases passed on 2026-04-16 (Automated / Playwright).
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-16_
+_Generated automatically on 2026-04-17_

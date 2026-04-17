@@ -75,6 +75,7 @@ As a registered user, I want to see a clear error message when I enter wrong cre
 | 2026-04-16 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-16 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 | 2026-04-16 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
+| 2026-04-17 | Automated | ✅ PASSED | Playwright / Alexis Guardado |
 
 ---
 
@@ -83,4 +84,4 @@ As a registered user, I want to see a clear error message when I enter wrong cre
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-16_
+_Generated automatically on 2026-04-17_
