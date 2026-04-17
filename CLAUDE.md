@@ -43,6 +43,7 @@ src/
 | SAU-56 | User can view product details | product-detail.spec.ts |
 | SAU-57 | Cart badge count updates correctly when multiple items are added | cart.spec.ts |
 | SAU-58 | Performance glitch user — checkout completes despite slow load | checkout.spec.ts |
+| SAU-59 | problem_user — product images are broken or mismatched | inventory.spec.ts, product-detail.spec.ts |
 
 ---
 

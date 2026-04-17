@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { qase } from 'playwright-qase-reporter';
+import { USERS } from '../utils/test-data';
 
 test.describe('Product Detail Page — SAU-56', () => {
 
@@ -57,6 +58,31 @@ test.describe('Product Detail Page — SAU-56', () => {
       await productDetailPage.goBackToProducts();
 
       await expect(page).toHaveURL(/inventory\.html/);
+    });
+
+});
+
+test.describe('Product Detail Page — SAU-59', () => {
+
+  // TC-047 — SAU-59
+  test('TC-047 — problem_user inventory image should match product detail image for same product',
+    async ({ loginPage, inventoryPage, productDetailPage, page }) => {
+      test.fail(); // SAU-59: inventory images are all the same (backpack), so they mismatch the detail page
+      qase.id(47);
+      qase.title('problem_user inventory image src matches product detail page image src');
+
+      await loginPage.loginWith(USERS.problem.username, USERS.problem.password);
+      await page.waitForURL('**/inventory.html');
+
+      // Capture inventory image src for second product (Sauce Labs Bike Light)
+      const inventorySrcs = await inventoryPage.getProductImageSrcs();
+      const inventoryImageSrc = inventorySrcs[1];
+
+      // Navigate to that same product's detail page
+      await inventoryPage.goToNthProduct(1);
+
+      const detailImageSrc = await productDetailPage.getProductImage().getAttribute('src');
+      expect(inventoryImageSrc).toBe(detailImageSrc);
     });
 
 });

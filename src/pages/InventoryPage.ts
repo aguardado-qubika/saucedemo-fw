@@ -84,12 +84,29 @@ export class InventoryPage extends BasePage {
         return names;
     }
 
+    async getProductImageSrcs(): Promise<string[]> {
+        const images = await this.page.locator('.inventory_item img').all();
+        const srcs: string[] = [];
+        for (const img of images) {
+            srcs.push(await img.getAttribute('src') ?? '');
+        }
+        return srcs;
+    }
+
     async goToFirstProduct(): Promise<void> {
         await this.page
             .locator('[data-test="inventory-item-name"]')
             .first()
             .click();
         await this.takeScreenshot('01-product-detail-page');
+    }
+
+    async goToNthProduct(index: number): Promise<void> {
+        await this.page
+            .locator('[data-test="inventory-item-name"]')
+            .nth(index)
+            .click();
+        await this.takeScreenshot(`01-product-${index}-detail-page`);
     }
 
     async logout(): Promise<void> {

@@ -48,6 +48,8 @@ export const URLS = {
 // Adding a TC here suppresses it from the failure count in reporter and notify-linear.
 export const XFAIL_TCS = new Set<string>([
   'TC-028', // SAU-38: SauceDemo defaults to A to Z; requirement says Z to A
+  'TC-046', // SAU-59: problem_user renders same broken image for all inventory products
+  'TC-047', // SAU-59: problem_user product detail page shows backpack image regardless of product
 ]);
 
 // Single source of truth for TC → Linear issue mapping
@@ -97,6 +99,8 @@ export const TC_TO_LINEAR: Record<string, string[]> = {
   'TC-040': ['SAU-56'],
   'TC-041': ['SAU-56'],
   'TC-045': ['SAU-58'],
+  'TC-046': ['SAU-59'],
+  'TC-047': ['SAU-59'],
 };
 
 // Single source of truth for TC → Linear issue title mapping
@@ -127,6 +131,7 @@ export const LINEAR_ISSUES: Array<{
   { id: 'SAU-56', title: 'User can view product details',                                              tcs: ['TC-038', 'TC-039', 'TC-040', 'TC-041'] },
   { id: 'SAU-57', title: 'Cart badge count updates correctly when multiple items are added',           tcs: ['TC-042', 'TC-043', 'TC-044'] },
   { id: 'SAU-58', title: 'Performance glitch user — checkout completes despite slow load',            tcs: ['TC-045'] },
+  { id: 'SAU-59', title: 'problem_user — product images are broken or mismatched',                   tcs: ['TC-046', 'TC-047'] },
 ];
 
 // Single source of truth for Qase case ID → TC ID mapping

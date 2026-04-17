@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { qase } from 'playwright-qase-reporter';
+import { USERS } from '../utils/test-data';
 
 test.describe('Inventory Page — SAU-34', () => {
 
@@ -116,6 +117,27 @@ test.describe('Inventory Page — SAU-38', () => {
       for (let i = 0; i < names.length - 1; i++) {
         expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
       }
+    });
+
+});
+
+test.describe('Inventory Page — SAU-59', () => {
+
+  // TC-046 — SAU-59
+  test('TC-046 — problem_user inventory page should show unique image per product',
+    async ({ loginPage, inventoryPage, page }) => {
+      test.fail(); // SAU-59: problem_user renders the same broken image for all products
+      qase.id(46);
+      qase.title('problem_user inventory page shows unique image per product');
+
+      await loginPage.loginWith(USERS.problem.username, USERS.problem.password);
+      await page.waitForURL('**/inventory.html');
+
+      const srcs = await inventoryPage.getProductImageSrcs();
+      expect(srcs.length).toBeGreaterThan(0);
+
+      const uniqueSrcs = new Set(srcs);
+      expect(uniqueSrcs.size).toBe(srcs.length);
     });
 
 });
