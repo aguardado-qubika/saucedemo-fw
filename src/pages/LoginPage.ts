@@ -8,6 +8,7 @@ export class LoginPage extends BasePage {
     private readonly passwordInput: Locator;
     private readonly loginButton: Locator;
     private readonly errorMessage: Locator;
+    private readonly logo: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -15,6 +16,7 @@ export class LoginPage extends BasePage {
         this.passwordInput = page.locator('[data-test="password"]');
         this.loginButton = page.locator('[data-test="login-button"]');
         this.errorMessage = page.locator('[data-test="error"]');
+        this.logo = page.locator('.login_logo');
     }
 
     async open(): Promise<void> {
@@ -52,5 +54,21 @@ export class LoginPage extends BasePage {
 
     getErrorMessage(): Locator {
         return this.errorMessage;
+    }
+
+    getUsernameInput(): Locator {
+        return this.usernameInput;
+    }
+
+    getPasswordInput(): Locator {
+        return this.passwordInput;
+    }
+
+    getLoginButton(): Locator {
+        return this.loginButton;
+    }
+
+    getLogo(): Locator {
+        return this.logo;
     }
 }

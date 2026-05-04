@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { USERS, MESSAGES } from '../utils/test-data';
 import { qase } from 'playwright-qase-reporter';
 
-test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-39', () => {
+test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-39, SAU-65', () => {
 
     // TC-001 — SAU-7
     test('TC-001 — should login successfully with valid credentials',
@@ -168,6 +168,57 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
             await loginPage.loginAs('performance_glitch_user');
 
             await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+        });
+
+    // TC-048 — SAU-65
+    test('TC-048 — all required form elements are visible on login page load',
+        async ({ loginPage }) => {
+            qase.id(48);
+            qase.title('All form elements visible on login page load');
+
+            await loginPage.open();
+
+            await expect(loginPage.getLogo()).toBeVisible();
+            await expect(loginPage.getUsernameInput()).toBeVisible();
+            await expect(loginPage.getPasswordInput()).toBeVisible();
+            await expect(loginPage.getLoginButton()).toBeVisible();
+        });
+
+    // TC-049 — SAU-65
+    test('TC-049 — form elements have correct placeholder text and button label',
+        async ({ loginPage }) => {
+            qase.id(49);
+            qase.title('Form elements have correct placeholder and button text');
+
+            await loginPage.open();
+
+            await expect(loginPage.getUsernameInput()).toHaveAttribute('placeholder', 'Username');
+            await expect(loginPage.getPasswordInput()).toHaveAttribute('placeholder', 'Password');
+            await expect(loginPage.getLoginButton()).toHaveValue('Login');
+        });
+
+    // TC-050 — SAU-65
+    test('TC-050 — error message is not visible on initial page load',
+        async ({ loginPage }) => {
+            qase.id(50);
+            qase.title('Error message not visible on initial page load');
+
+            await loginPage.open();
+
+            await expect(loginPage.getErrorMessage()).toBeHidden();
+        });
+
+    // TC-051 — SAU-65
+    test('TC-051 — exactly one of each form element exists in the DOM',
+        async ({ loginPage }) => {
+            qase.id(51);
+            qase.title('Exactly one username input, password input, and login button in DOM');
+
+            await loginPage.open();
+
+            await expect(loginPage.getUsernameInput()).toHaveCount(1);
+            await expect(loginPage.getPasswordInput()).toHaveCount(1);
+            await expect(loginPage.getLoginButton()).toHaveCount(1);
         });
 
 });

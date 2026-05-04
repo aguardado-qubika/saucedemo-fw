@@ -40,6 +40,7 @@ const SUITE_MAP: Record<string, number> = {
   'SAU-57': 4, // Cart
   'SAU-58': 3, // Checkout
   'SAU-59': 2, // Inventory
+  'SAU-65': 1, // Login
 };
 
 // TC → suite ID lookup
