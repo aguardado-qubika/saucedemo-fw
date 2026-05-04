@@ -1,3 +1,24 @@
+/**
+ * notify-linear.ts — Post Qase run results as comments on Linear issues.
+ *
+ * Usage:
+ *   ts-node src/utils/notify-linear.ts [--run-id <qase_run_id>]
+ *
+ * Required env vars (.env):
+ *   LINEAR_API_KEY            — Linear personal API key
+ *   QASE_TESTOPS_API_TOKEN    — Qase API token
+ *   QASE_PROJECT_CODE         — Qase project code (e.g. "STA")
+ *
+ * Optional env vars:
+ *   APP_BASE_URL              — URL of the app under test (default: https://www.saucedemo.com)
+ *   TEST_BROWSER              — Browser label used in comments (default: Chromium)
+ *   TEST_FRAMEWORK            — Framework label used in comments (default: Playwright v1 + TypeScript)
+ *
+ * Data shape required from test-data.ts:
+ *   TC_TO_LINEAR  : Record<string, string[]>   // TC-001 → ["SAU-7", "SAU-28"]
+ *   QASE_TO_TC    : Record<number, string>      // 12345  → "TC-001"
+ *   XFAIL_TCS     : Set<string>                 // known-failing TCs that should not count as regressions
+ */
 import * as dotenv from 'dotenv';
 import { TC_TO_LINEAR, QASE_TO_TC, XFAIL_TCS } from './test-data';
 
@@ -5,8 +26,12 @@ dotenv.config();
 
 const LINEAR_API_KEY = process.env.LINEAR_API_KEY;
 const QASE_TOKEN    = process.env.QASE_TESTOPS_API_TOKEN;
-const QASE_PROJECT  = 'STA';
+const QASE_PROJECT  = process.env.QASE_PROJECT_CODE;
 const QASE_API      = 'https://api.qase.io/v1';
+
+const APP_BASE_URL    = process.env.APP_BASE_URL    ?? 'https://www.saucedemo.com';
+const TEST_BROWSER    = process.env.TEST_BROWSER    ?? 'Chromium';
+const TEST_FRAMEWORK  = process.env.TEST_FRAMEWORK  ?? 'Playwright v1 + TypeScript';
 
 if (!LINEAR_API_KEY) {
   console.error('❌ LINEAR_API_KEY not found in .env file');
@@ -15,6 +40,11 @@ if (!LINEAR_API_KEY) {
 
 if (!QASE_TOKEN) {
   console.error('❌ QASE_TESTOPS_API_TOKEN not found in .env file');
+  process.exit(1);
+}
+
+if (!QASE_PROJECT) {
+  console.error('❌ QASE_PROJECT_CODE not found in .env file');
   process.exit(1);
 }
 
@@ -204,9 +234,9 @@ function buildComment(
     `${icon} AUTOMATED TEST EXECUTION — ${type}`,
     `Date: ${date}`,
     `Executed by: Playwright + TypeScript Framework`,
-    `Environment: https://www.saucedemo.com`,
-    `Browser: Chromium`,
-    `Framework: Playwright v1 + TypeScript`,
+    `Environment: ${APP_BASE_URL}`,
+    `Browser: ${TEST_BROWSER}`,
+    `Framework: ${TEST_FRAMEWORK}`,
     ``,
     `RESULTS:`,
     tcLines,
