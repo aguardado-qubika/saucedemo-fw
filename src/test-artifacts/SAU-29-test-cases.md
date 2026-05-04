@@ -84,4 +84,4 @@ As a registered user, I want to see a clear error message when I enter wrong cre
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

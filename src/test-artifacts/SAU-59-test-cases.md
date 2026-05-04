@@ -2,7 +2,7 @@
 
 **Linear:** https://linear.app/saucedemo-qa/issue/SAU-59/problem-user-product-images-are-broken-or-mismatched
 **Project:** SauceDemo Test Automation
-**Status:** Backlog
+**Status:** Done
 
 ---
 
@@ -95,7 +95,23 @@ Both TCs document known platform defects, consistent with TC-028 ([SAU-38](https
 
 ## Test Cases
 
-_No test cases found._
+## Framework execution results — SAU-59
+
+| Field | Value |
+| -- | -- |
+| Run date | 2026-04-17 |
+| Qase run | #47 |
+| Branch | `feature/SAU-59-problem-user-product-images-broken` |
+| Merged into | `agentic-framework-evaluation` |
+
+| TC | Title | Result |
+| -- | -- | -- |
+| TC-046 | problem_user inventory page shows unique image per product | ⚠️ xfail (known bug confirmed) |
+| TC-047 | problem_user inventory image matches product detail image for same product | ⚠️ xfail (known bug confirmed) |
+
+Both TCs annotated with `test.fail()` — expected failures documenting the confirmed image rendering defect. All 47 tests passed (3 total xfail including TC-028/SAU-38).
+
+**Implementation note:** TC-047 was refined during implementation. The original assertion (detail page shows backpack URL) passed unexpectedly — the bug is confined to the inventory grid; the detail page renders correctly. TC-047 was rewritten to expose the cross-view mismatch: inventory image src ≠ detail page image src for the same product (Sauce Labs Bike Light).
 
 ---
 
@@ -112,4 +128,4 @@ _No test cases found._
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

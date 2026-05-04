@@ -14,7 +14,7 @@ As a performance_glitch_user, I want the full checkout flow to complete successf
 
 ## Background
 
-TC-034 (SAU-39) already validates that `performance_glitch_user` can log in with a delayed response using an extended timeout (`test.setTimeout(60000)`). No test currently verifies that this user can complete the checkout flow end-to-end under the same slow-load conditions.
+TC-034 ([SAU-39](https://linear.app/saucedemo-qa/issue/SAU-39/refactor-login-helper-to-support-all-saucedemocom-user-types)) already validates that `performance_glitch_user` can log in with a delayed response using an extended timeout (`test.setTimeout(60000)`). No test currently verifies that this user can complete the checkout flow end-to-end under the same slow-load conditions.
 
 The `performance_glitch_user` credential (`performance_glitch_user` / `secret_sauce`) is already defined in `test-data.ts`. The checkout flow (add to cart → info → overview → confirmation) is established in `checkout.spec.ts`.
 
@@ -48,8 +48,8 @@ test.setTimeout(60000);
 | File | Change |
 | -- | -- |
 | `src/tests/checkout.spec.ts` | Add `test.describe('Checkout — performance_glitch_user — SAU-58')` block with TC-045 |
-| `src/utils/test-data.ts` | Map TC-045 → SAU-58 |
-| `CLAUDE.md` | Add SAU-58 to Linear Issues table |
+| `src/utils/test-data.ts` | Map TC-045 → [SAU-58](https://linear.app/saucedemo-qa/issue/SAU-58/performance-glitch-user-checkout-completes-despite-slow-load) |
+| `CLAUDE.md` | Add [SAU-58](https://linear.app/saucedemo-qa/issue/SAU-58/performance-glitch-user-checkout-completes-despite-slow-load) to Linear Issues table |
 
 ### No new helpers required
 
@@ -119,4 +119,4 @@ Framework correctly identified that the `performance_glitch_user` credential was
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

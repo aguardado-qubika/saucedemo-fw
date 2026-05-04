@@ -83,4 +83,4 @@ Framework did NOT reuse TC-006 (SAU-10 add-to-cart test). Generated TC-012 as a 
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

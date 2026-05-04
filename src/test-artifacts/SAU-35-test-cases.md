@@ -77,4 +77,4 @@ Framework correctly identified no prior logout coverage existed. TC-020 asserts 
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

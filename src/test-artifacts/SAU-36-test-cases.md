@@ -73,4 +73,4 @@ Framework correctly identified existing cart coverage (TC-014, TC-015) before ad
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

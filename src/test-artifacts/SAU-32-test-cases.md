@@ -82,4 +82,4 @@ Framework did NOT reuse TC-007 (SAU-11 checkout test). Generated TC-013 as a dis
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_

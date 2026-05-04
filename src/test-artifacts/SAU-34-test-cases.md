@@ -84,4 +84,4 @@ Framework correctly identified TC-008 (SAU-48) already covered sort-by-price and
 Screenshots per step stored in:
 `test-results/YYYY-MM-DD/run-{timestamp}/screenshots/`
 
-_Generated automatically on 2026-04-17_
+_Generated automatically on 2026-05-04_
