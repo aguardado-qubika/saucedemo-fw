@@ -22,7 +22,7 @@ export default defineConfig({
     ] : []),
   ],
   use: {
-    baseURL: 'https://www.saucedemo.com',
+    baseURL: process.env.APP_BASE_URL || 'https://www.saucedemo.com',
     actionTimeout: 15000,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
