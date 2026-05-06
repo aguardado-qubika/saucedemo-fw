@@ -19,3 +19,5 @@ evidence/
 
 # Playwright
 dist/
+.codex-temp/
+.codex-backups/
