@@ -27,7 +27,7 @@ dotenv.config();
 const LINEAR_API_KEY = process.env.LINEAR_API_KEY;
 const QASE_TOKEN    = process.env.QASE_TESTOPS_API_TOKEN;
 const QASE_PROJECT  = process.env.QASE_PROJECT_CODE;
-const QASE_API      = 'https://api.qase.io/v1';
+const QASE_API = process.env.QASE_API || 'https://api.qase.io/v1';
 
 const APP_BASE_URL    = process.env.APP_BASE_URL    ?? 'https://www.saucedemo.com';
 const TEST_BROWSER    = process.env.TEST_BROWSER    ?? 'Chromium';

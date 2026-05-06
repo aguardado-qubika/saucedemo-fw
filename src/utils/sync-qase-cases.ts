@@ -6,8 +6,8 @@ import { LINEAR_ISSUES, QASE_TO_TC, TC_TO_LINEAR } from './test-data';
 dotenv.config();
 
 const TOKEN = process.env.QASE_TESTOPS_API_TOKEN;
-const QASE_API = 'https://api.qase.io/v1';
-const QASE_PROJECT = 'STA';
+const QASE_API = process.env.QASE_API || 'https://api.qase.io/v1';
+const QASE_PROJECT = process.env.QASE_PROJECT_CODE || 'STA';
 const TEST_DATA_PATH = path.join(__dirname, 'test-data.ts');
 
 if (!TOKEN) {

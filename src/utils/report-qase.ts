@@ -6,8 +6,8 @@ import { QASE_TO_TC } from './test-data';
 dotenv.config();
 
 const QASE_TOKEN = process.env.QASE_TESTOPS_API_TOKEN;
-const QASE_PROJECT = 'STA';
-const QASE_API = 'https://api.qase.io/v1';
+const QASE_PROJECT = process.env.QASE_PROJECT_CODE || 'STA';
+const QASE_API = process.env.QASE_API || 'https://api.qase.io/v1';
 
 if (!QASE_TOKEN) {
   console.error('❌ QASE_TESTOPS_API_TOKEN not found in .env file');

@@ -60,7 +60,7 @@ class LinearReporter implements Reporter {
             ``,
             `**Date:** ${date}`,
             `**Framework:** Playwright + TypeScript`,
-            `**Environment:** https://www.saucedemo.com`,
+            `**Environment:** ${process.env.APP_BASE_URL}`,
             `**Browser:** Chromium`,
             ``,
             `## Results`,
