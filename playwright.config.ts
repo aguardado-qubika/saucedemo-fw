@@ -6,8 +6,10 @@ export default defineConfig({
   testDir: './src/tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: 0,
-  workers: 1,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 4 : 1,
+  globalTimeout: process.env.CI ? 60 * 60 * 1000 : undefined,
+  timeout: 30000,
   reporter: [
     ['list'],
     ['html', { open: 'never' }],
@@ -16,7 +18,7 @@ export default defineConfig({
       ['playwright-qase-reporter', {
         testops: {
           api: { token: process.env.QASE_TESTOPS_API_TOKEN },
-          project: 'STA',
+          project: process.env.QASE_PROJECT_CODE || 'STA',
           run: { complete: true },
           uploadAttachments: true,
         },
@@ -26,9 +28,10 @@ export default defineConfig({
   use: {
     baseURL: process.env.APP_BASE_URL || 'https://www.saucedemo.com',
     actionTimeout: 15000,
+    navigationTimeout: 30000,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    headless: !process.env.CI ? false : true,
+    headless: !!process.env.CI,
     viewport: { width: 1280, height: 720 },
   },
   projects: [
