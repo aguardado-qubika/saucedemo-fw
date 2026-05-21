@@ -12,7 +12,7 @@ test.describe('Logout — SAU-35', () => {
 
       await loggedInPage.logout();
 
-      await expect(page).toHaveURL(URLS.login);
+      await expect(page, 'User should be redirected to login page after logout').toHaveURL(URLS.login);
     });
 
   // TC-021 — SAU-35
@@ -25,7 +25,7 @@ test.describe('Logout — SAU-35', () => {
 
       await page.goto(URLS.inventory);
 
-      await expect(page).toHaveURL(URLS.login);
+      await expect(page, 'Accessing inventory after logout should redirect to login page').toHaveURL(URLS.login);
     });
 
 });
