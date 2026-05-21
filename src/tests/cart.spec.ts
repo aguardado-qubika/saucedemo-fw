@@ -10,11 +10,11 @@ test.describe('Cart — SAU-33', () => {
     qase.title('Remove product from inventory page clears cart badge');
 
     await loggedInPage.addFirstProductToCart();
-    await expect(loggedInPage.getCartBadge()).toHaveText('1');
+    await expect.soft(loggedInPage.getCartBadge(), 'Cart badge should show 1 after adding product').toHaveText('1');
 
     await loggedInPage.removeFirstProductFromCart();
 
-    await expect(loggedInPage.getCartBadge()).not.toBeVisible();
+    await expect(loggedInPage.getCartBadge(), 'Cart badge should disappear after removing product').not.toBeVisible();
   });
 
   // TC-015 — SAU-33 (AC2)
@@ -26,11 +26,11 @@ test.describe('Cart — SAU-33', () => {
     await loggedInPage.addFirstProductToCart();
     await loggedInPage.goToCart();
 
-    await expect(cartPage.getCartItems()).toHaveCount(1);
+    await expect(cartPage.getCartItems(), 'Cart should contain 1 item before removal').toHaveCount(1);
 
     await cartPage.removeFirstItem();
 
-    await expect(cartPage.getCartItems()).toHaveCount(0);
+    await expect(cartPage.getCartItems(), 'Cart should be empty after removal').toHaveCount(0);
   });
 
 });
@@ -46,7 +46,7 @@ test.describe('Cart badge — SAU-57', () => {
     await loggedInPage.addNthProductToCart(0);
     await loggedInPage.addNthProductToCart(1);
 
-    await expect(loggedInPage.getCartBadge()).toHaveText('2');
+    await expect(loggedInPage.getCartBadge(), 'Cart badge should show 2 after adding two products').toHaveText('2');
   });
 
   // TC-043 — SAU-57 (AC2)
@@ -59,7 +59,7 @@ test.describe('Cart badge — SAU-57', () => {
     await loggedInPage.addNthProductToCart(1);
     await loggedInPage.addNthProductToCart(2);
 
-    await expect(loggedInPage.getCartBadge()).toHaveText('3');
+    await expect(loggedInPage.getCartBadge(), 'Cart badge should show 3 after adding three products').toHaveText('3');
   });
 
   // TC-044 — SAU-57 (AC3)
@@ -70,11 +70,11 @@ test.describe('Cart badge — SAU-57', () => {
 
     await loggedInPage.addNthProductToCart(0);
     await loggedInPage.addNthProductToCart(1);
-    await expect(loggedInPage.getCartBadge()).toHaveText('2');
+    await expect.soft(loggedInPage.getCartBadge(), 'Cart badge should show 2 before removal').toHaveText('2');
 
     await loggedInPage.removeFirstProductFromCart();
 
-    await expect(loggedInPage.getCartBadge()).toHaveText('1');
+    await expect(loggedInPage.getCartBadge(), 'Cart badge should show 1 after removing one item').toHaveText('1');
   });
 
 });
@@ -90,8 +90,8 @@ test.describe('Cart — SAU-36', () => {
     await loggedInPage.addFirstProductToCart();
     await loggedInPage.goToCart();
 
-    await expect(cartPage.getFirstItemName()).toHaveText('Sauce Labs Backpack');
-    await expect(cartPage.getFirstItemPrice()).toHaveText('$29.99');
+    await expect(cartPage.getFirstItemName(), 'Cart item name should be "Sauce Labs Backpack"').toHaveText('Sauce Labs Backpack');
+    await expect(cartPage.getFirstItemPrice(), 'Cart item price should be "$29.99"').toHaveText('$29.99');
   });
 
   // TC-023 — SAU-36 (AC2)
@@ -105,7 +105,7 @@ test.describe('Cart — SAU-36', () => {
 
     await cartPage.continueShopping();
 
-    await expect(page).toHaveURL(/inventory\.html/);
+    await expect(page, 'Continuing shopping should navigate to inventory page').toHaveURL(/inventory\.html/);
   });
 
 });

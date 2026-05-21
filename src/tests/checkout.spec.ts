@@ -12,14 +12,14 @@ test.describe('Checkout — SAU-11, SAU-32', () => {
     await loggedInPage.addFirstProductToCart();
     await loggedInPage.goToCart();
 
-    await expect(cartPage.getCartItems()).toHaveCount(1);
+    await expect.soft(cartPage.getCartItems(), 'Cart should contain 1 item before checkout').toHaveCount(1);
 
     await cartPage.proceedToCheckout();
     await checkoutPage.fillShippingInfo('Test', 'User', '12345');
     await checkoutPage.clickContinue();
     await checkoutPage.clickFinish();
 
-    await expect(checkoutPage.getConfirmationTitle())
+    await expect(checkoutPage.getConfirmationTitle(), 'Confirmation title should thank the user for their order')
       .toHaveText('Thank you for your order!');
   });
 
@@ -36,7 +36,7 @@ test.describe('Checkout — SAU-11, SAU-32', () => {
     await checkoutPage.clickContinue();
     await checkoutPage.clickFinish();
 
-    await expect(page).toHaveURL(/checkout-complete/);
+    await expect(page, 'Should be redirected to checkout-complete page').toHaveURL(/checkout-complete/);
   });
 
 });
@@ -55,7 +55,7 @@ test.describe('Checkout — SAU-37', () => {
     await checkoutPage.fillShippingInfo('', 'User', '12345');
     await checkoutPage.clickContinue();
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate first name is required')
       .toHaveText('Error: First Name is required');
   });
 
@@ -71,7 +71,7 @@ test.describe('Checkout — SAU-37', () => {
     await checkoutPage.fillShippingInfo('Test', '', '12345');
     await checkoutPage.clickContinue();
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate last name is required')
       .toHaveText('Error: Last Name is required');
   });
 
@@ -87,7 +87,7 @@ test.describe('Checkout — SAU-37', () => {
     await checkoutPage.fillShippingInfo('Test', 'User', '');
     await checkoutPage.clickContinue();
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate postal code is required')
       .toHaveText('Error: Postal Code is required');
   });
 
@@ -102,7 +102,7 @@ test.describe('Checkout — SAU-37', () => {
     await cartPage.proceedToCheckout();
     await checkoutPage.clickCancel();
 
-    await expect(page).toHaveURL(/cart\.html/);
+    await expect(page, 'Cancelling checkout should return to cart page').toHaveURL(/cart\.html/);
   });
 
 });
@@ -125,7 +125,7 @@ test.describe('Checkout — SAU-58', () => {
     await checkoutPage.clickContinue();
     await checkoutPage.clickFinish();
 
-    await expect(checkoutPage.getConfirmationTitle())
+    await expect(checkoutPage.getConfirmationTitle(), 'Confirmation title should thank the user despite slow load')
       .toHaveText('Thank you for your order!');
   });
 
@@ -144,7 +144,7 @@ test.describe('Checkout — SAU-40', () => {
     await cartPage.proceedToCheckout();
     await checkoutPage.submitCheckoutForm('', 'User', '12345');
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate first name is required')
       .toHaveText('Error: First Name is required');
   });
 
@@ -159,7 +159,7 @@ test.describe('Checkout — SAU-40', () => {
     await cartPage.proceedToCheckout();
     await checkoutPage.submitCheckoutForm('Test', '', '12345');
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate last name is required')
       .toHaveText('Error: Last Name is required');
   });
 
@@ -174,7 +174,7 @@ test.describe('Checkout — SAU-40', () => {
     await cartPage.proceedToCheckout();
     await checkoutPage.submitCheckoutForm('Test', 'User', '');
 
-    await expect(checkoutPage.getErrorMessage())
+    await expect(checkoutPage.getErrorMessage(), 'Error message should indicate postal code is required')
       .toHaveText('Error: Postal Code is required');
   });
 

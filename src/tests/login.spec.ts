@@ -15,11 +15,10 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
                 USERS.standard.password
             );
 
-            await expect(inventoryPage.getPageTitle())
+            await expect(inventoryPage.getPageTitle(), 'Inventory page title should be "Products"')
                 .toHaveText('Products');
-
-            const count = await inventoryPage.getProductCount();
-            expect(count).toBeGreaterThan(0);
+            await expect(inventoryPage.getProductItems(), 'At least one product should be displayed')
+                .not.toHaveCount(0);
         });
 
     // TC-002 — SAU-8
@@ -33,8 +32,9 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
                 USERS.invalid.password
             );
 
-            await expect(loginPage.getErrorMessage()).toBeVisible();
-            await expect(loginPage.getErrorMessage())
+            const errorMsg = loginPage.getErrorMessage();
+            await expect(errorMsg, 'Error message should be visible after invalid login').toBeVisible();
+            await expect(errorMsg, 'Error message should describe invalid credentials')
                 .toContainText(MESSAGES.invalidCreds);
         });
 
@@ -48,7 +48,7 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
             await loginPage.fillPassword(USERS.standard.password);
             await loginPage.clickLogin();
 
-            await expect(loginPage.getErrorMessage())
+            await expect(loginPage.getErrorMessage(), 'Error message should require username')
                 .toContainText(MESSAGES.usernameRequired);
         });
 
@@ -62,7 +62,7 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
             await loginPage.fillUsername(USERS.standard.username);
             await loginPage.clickLogin();
 
-            await expect(loginPage.getErrorMessage())
+            await expect(loginPage.getErrorMessage(), 'Error message should require password')
                 .toContainText(MESSAGES.passwordRequired);
         });
 
@@ -77,10 +77,11 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
                 USERS.invalid.password
             );
 
-            await expect(loginPage.getErrorMessage()).toBeVisible();
-            await expect(loginPage.getErrorMessage())
+            const errorMsg = loginPage.getErrorMessage();
+            await expect(errorMsg, 'Error message should be visible').toBeVisible();
+            await expect(errorMsg, 'Error message should describe invalid credentials')
                 .toContainText(MESSAGES.invalidCreds);
-            await expect(page).toHaveURL('/');
+            await expect(page, 'User should remain on the login page').toHaveURL('/');
         });
 
     // TC-005 — SAU-9
@@ -94,14 +95,15 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
                 USERS.locked.password
             );
 
-            await expect(loginPage.getErrorMessage()).toBeVisible();
-            await expect(loginPage.getErrorMessage())
+            const errorMsg = loginPage.getErrorMessage();
+            await expect(errorMsg, 'Error message should be visible for locked out user').toBeVisible();
+            await expect(errorMsg, 'Error message should indicate account is locked')
                 .toContainText(MESSAGES.lockedOut);
         });
 
     // TC-010 — SAU-28
     test('TC-010 — should redirect to inventory page after valid login',
-        async ({ loginPage, inventoryPage }) => {
+        async ({}) => {
             qase.id(10);
             qase.title('Valid login redirects to inventory with Products title');
         });
@@ -117,10 +119,11 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
                 USERS.locked.password
             );
 
-            await expect(loginPage.getErrorMessage()).toBeVisible();
-            await expect(loginPage.getErrorMessage())
+            const errorMsg = loginPage.getErrorMessage();
+            await expect(errorMsg, 'Error message should be visible for locked out user').toBeVisible();
+            await expect(errorMsg, 'Error message should indicate account is locked')
                 .toContainText(MESSAGES.lockedOut);
-            await expect(page).toHaveURL('/');
+            await expect(page, 'Locked out user should remain on login page').toHaveURL('/');
         });
 
     // TC-031 — SAU-39
@@ -131,7 +134,8 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.loginAs('standard_user');
 
-            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+            await expect(inventoryPage.getPageTitle(), 'Inventory page title should be "Products"')
+                .toHaveText('Products');
         });
 
     // TC-032 — SAU-39
@@ -142,7 +146,8 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.loginAs('problem_user');
 
-            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+            await expect(inventoryPage.getPageTitle(), 'Inventory page title should be "Products"')
+                .toHaveText('Products');
         });
 
     // TC-033 — SAU-39
@@ -153,8 +158,9 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.loginAs('locked_out_user');
 
-            await expect(loginPage.getErrorMessage()).toBeVisible();
-            await expect(loginPage.getErrorMessage())
+            const errorMsg = loginPage.getErrorMessage();
+            await expect(errorMsg, 'Error message should be visible for locked out user').toBeVisible();
+            await expect(errorMsg, 'Error message should indicate account is locked')
                 .toContainText(MESSAGES.lockedOut);
         });
 
@@ -167,7 +173,8 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.loginAs('performance_glitch_user');
 
-            await expect(inventoryPage.getPageTitle()).toHaveText('Products');
+            await expect(inventoryPage.getPageTitle(), 'Inventory page title should be "Products" after slow login')
+                .toHaveText('Products');
         });
 
     // TC-048 — SAU-65
@@ -178,10 +185,10 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.open();
 
-            await expect(loginPage.getLogo()).toBeVisible();
-            await expect(loginPage.getUsernameInput()).toBeVisible();
-            await expect(loginPage.getPasswordInput()).toBeVisible();
-            await expect(loginPage.getLoginButton()).toBeVisible();
+            await expect(loginPage.getLogo(), 'Logo should be visible').toBeVisible();
+            await expect(loginPage.getUsernameInput(), 'Username input should be visible').toBeVisible();
+            await expect(loginPage.getPasswordInput(), 'Password input should be visible').toBeVisible();
+            await expect(loginPage.getLoginButton(), 'Login button should be visible').toBeVisible();
         });
 
     // TC-049 — SAU-65
@@ -192,9 +199,12 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.open();
 
-            await expect(loginPage.getUsernameInput()).toHaveAttribute('placeholder', 'Username');
-            await expect(loginPage.getPasswordInput()).toHaveAttribute('placeholder', 'Password');
-            await expect(loginPage.getLoginButton()).toHaveValue('Login');
+            await expect(loginPage.getUsernameInput(), 'Username input should have placeholder "Username"')
+                .toHaveAttribute('placeholder', 'Username');
+            await expect(loginPage.getPasswordInput(), 'Password input should have placeholder "Password"')
+                .toHaveAttribute('placeholder', 'Password');
+            await expect(loginPage.getLoginButton(), 'Login button should have value "Login"')
+                .toHaveValue('Login');
         });
 
     // TC-050 — SAU-65
@@ -205,7 +215,8 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.open();
 
-            await expect(loginPage.getErrorMessage()).toBeHidden();
+            await expect(loginPage.getErrorMessage(), 'Error message should not be visible on page load')
+                .toBeHidden();
         });
 
     // TC-051 — SAU-65
@@ -216,9 +227,9 @@ test.describe('Login Page — SAU-7, SAU-8, SAU-9, SAU-28, SAU-29, SAU-30, SAU-3
 
             await loginPage.open();
 
-            await expect(loginPage.getUsernameInput()).toHaveCount(1);
-            await expect(loginPage.getPasswordInput()).toHaveCount(1);
-            await expect(loginPage.getLoginButton()).toHaveCount(1);
+            await expect(loginPage.getUsernameInput(), 'Exactly one username input should exist').toHaveCount(1);
+            await expect(loginPage.getPasswordInput(), 'Exactly one password input should exist').toHaveCount(1);
+            await expect(loginPage.getLoginButton(), 'Exactly one login button should exist').toHaveCount(1);
         });
 
 });

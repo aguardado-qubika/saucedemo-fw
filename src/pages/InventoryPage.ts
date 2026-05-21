@@ -51,6 +51,10 @@ export class InventoryPage extends BasePage {
         return this.pageTitle;
     }
 
+    getProductItems(): Locator {
+        return this.productItems;
+    }
+
     getCartBadge(): Locator {
         return this.cartBadge;
     }

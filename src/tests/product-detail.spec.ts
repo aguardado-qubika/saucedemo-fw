@@ -12,7 +12,7 @@ test.describe('Product Detail Page — SAU-56', () => {
 
       await loggedInPage.goToFirstProduct();
 
-      await expect(page).toHaveURL(/inventory-item\.html/);
+      await expect(page, 'Should navigate to product detail page URL').toHaveURL(/inventory-item\.html/);
     });
 
   // TC-039 — SAU-56
@@ -23,16 +23,18 @@ test.describe('Product Detail Page — SAU-56', () => {
 
       await loggedInPage.goToFirstProduct();
 
-      await expect(productDetailPage.getProductName()).toBeVisible();
-      await expect(productDetailPage.getProductName()).not.toBeEmpty();
+      const productName = productDetailPage.getProductName();
+      await expect.soft(productName, 'Product name should be visible').toBeVisible();
+      await expect(productName, 'Product name should not be empty').not.toBeEmpty();
 
-      await expect(productDetailPage.getProductDesc()).toBeVisible();
-      await expect(productDetailPage.getProductDesc()).not.toBeEmpty();
+      const productDesc = productDetailPage.getProductDesc();
+      await expect.soft(productDesc, 'Product description should be visible').toBeVisible();
+      await expect(productDesc, 'Product description should not be empty').not.toBeEmpty();
 
-      await expect(productDetailPage.getProductPrice()).toBeVisible();
-      await expect(productDetailPage.getProductPrice()).toHaveText(/^\$\d+\.\d{2}$/);
+      await expect(productDetailPage.getProductPrice(), 'Product price should match currency format')
+        .toHaveText(/^\$\d+\.\d{2}$/);
 
-      await expect(productDetailPage.getProductImage()).toBeVisible();
+      await expect(productDetailPage.getProductImage(), 'Product image should be visible').toBeVisible();
     });
 
   // TC-040 — SAU-56
@@ -44,8 +46,8 @@ test.describe('Product Detail Page — SAU-56', () => {
       await loggedInPage.goToFirstProduct();
       await productDetailPage.addToCart();
 
-      await expect(productDetailPage.getCartBadge()).toHaveText('1');
-      await expect(productDetailPage.getRemoveButton()).toBeVisible();
+      await expect(productDetailPage.getCartBadge(), 'Cart badge should show 1 after adding product').toHaveText('1');
+      await expect(productDetailPage.getRemoveButton(), 'Remove button should appear after adding product').toBeVisible();
     });
 
   // TC-041 — SAU-56
@@ -57,7 +59,7 @@ test.describe('Product Detail Page — SAU-56', () => {
       await loggedInPage.goToFirstProduct();
       await productDetailPage.goBackToProducts();
 
-      await expect(page).toHaveURL(/inventory\.html/);
+      await expect(page, 'Back button should navigate to inventory page').toHaveURL(/inventory\.html/);
     });
 
 });
@@ -72,7 +74,7 @@ test.describe('Product Detail Page — SAU-59', () => {
       qase.title('problem_user inventory image src matches product detail page image src');
 
       await loginPage.loginWith(USERS.problem.username, USERS.problem.password);
-      await page.waitForURL('**/inventory.html');
+      await expect(page, 'Should land on inventory page after login').toHaveURL(/inventory\.html/);
 
       // Capture inventory image src for second product (Sauce Labs Bike Light)
       const inventorySrcs = await inventoryPage.getProductImageSrcs();
@@ -81,8 +83,8 @@ test.describe('Product Detail Page — SAU-59', () => {
       // Navigate to that same product's detail page
       await inventoryPage.goToNthProduct(1);
 
-      const detailImageSrc = await productDetailPage.getProductImage().getAttribute('src');
-      expect(inventoryImageSrc).toBe(detailImageSrc);
+      await expect(productDetailPage.getProductImage(), 'Detail page image should match inventory image src for same product')
+        .toHaveAttribute('src', inventoryImageSrc);
     });
 
 });

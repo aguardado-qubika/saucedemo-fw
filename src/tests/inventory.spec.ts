@@ -12,11 +12,11 @@ test.describe('Inventory Page — SAU-34', () => {
 
       await loggedInPage.sortBy('az');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const names = await loggedInPage.getProductNames();
-      expect(names.length).toBeGreaterThan(0);
 
       for (let i = 0; i < names.length - 1; i++) {
-        expect(names[i].localeCompare(names[i + 1])).toBeLessThanOrEqual(0);
+        expect(names[i].localeCompare(names[i + 1]), `"${names[i]}" should come before "${names[i + 1]}" in A-to-Z order`).toBeLessThanOrEqual(0);
       }
     });
 
@@ -28,11 +28,11 @@ test.describe('Inventory Page — SAU-34', () => {
 
       await loggedInPage.sortBy('za');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const names = await loggedInPage.getProductNames();
-      expect(names.length).toBeGreaterThan(0);
 
       for (let i = 0; i < names.length - 1; i++) {
-        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+        expect(names[i].localeCompare(names[i + 1]), `"${names[i]}" should come after "${names[i + 1]}" in Z-to-A order`).toBeGreaterThanOrEqual(0);
       }
     });
 
@@ -44,11 +44,11 @@ test.describe('Inventory Page — SAU-34', () => {
 
       await loggedInPage.sortBy('lohi');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const prices = await loggedInPage.getProductPrices();
-      expect(prices.length).toBeGreaterThan(0);
 
       for (let i = 0; i < prices.length - 1; i++) {
-        expect(prices[i]).toBeLessThanOrEqual(prices[i + 1]);
+        expect(prices[i], `$${prices[i]} should be less than or equal to $${prices[i + 1]}`).toBeLessThanOrEqual(prices[i + 1]);
       }
     });
 
@@ -60,11 +60,11 @@ test.describe('Inventory Page — SAU-34', () => {
 
       await loggedInPage.sortBy('hilo');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const prices = await loggedInPage.getProductPrices();
-      expect(prices.length).toBeGreaterThan(0);
 
       for (let i = 0; i < prices.length - 1; i++) {
-        expect(prices[i]).toBeGreaterThanOrEqual(prices[i + 1]);
+        expect(prices[i], `$${prices[i]} should be greater than or equal to $${prices[i + 1]}`).toBeGreaterThanOrEqual(prices[i + 1]);
       }
     });
 
@@ -79,11 +79,11 @@ test.describe('Inventory Page — SAU-38', () => {
       qase.id(28);
       qase.title('Default sort order on page load is Z to A');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed on page load').not.toHaveCount(0);
       const names = await loggedInPage.getProductNames();
-      expect(names.length).toBeGreaterThan(0);
 
       for (let i = 0; i < names.length - 1; i++) {
-        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+        expect(names[i].localeCompare(names[i + 1]), `"${names[i]}" should come after "${names[i + 1]}" in Z-to-A order`).toBeGreaterThanOrEqual(0);
       }
     });
 
@@ -95,11 +95,11 @@ test.describe('Inventory Page — SAU-38', () => {
 
       await loggedInPage.sortBy('az');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const names = await loggedInPage.getProductNames();
-      expect(names.length).toBeGreaterThan(0);
 
       for (let i = 0; i < names.length - 1; i++) {
-        expect(names[i].localeCompare(names[i + 1])).toBeLessThanOrEqual(0);
+        expect(names[i].localeCompare(names[i + 1]), `"${names[i]}" should come before "${names[i + 1]}" in A-to-Z order`).toBeLessThanOrEqual(0);
       }
     });
 
@@ -111,11 +111,11 @@ test.describe('Inventory Page — SAU-38', () => {
 
       await loggedInPage.sortBy('za');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const names = await loggedInPage.getProductNames();
-      expect(names.length).toBeGreaterThan(0);
 
       for (let i = 0; i < names.length - 1; i++) {
-        expect(names[i].localeCompare(names[i + 1])).toBeGreaterThanOrEqual(0);
+        expect(names[i].localeCompare(names[i + 1]), `"${names[i]}" should come after "${names[i + 1]}" in Z-to-A order`).toBeGreaterThanOrEqual(0);
       }
     });
 
@@ -131,13 +131,13 @@ test.describe('Inventory Page — SAU-59', () => {
       qase.title('problem_user inventory page shows unique image per product');
 
       await loginPage.loginWith(USERS.problem.username, USERS.problem.password);
-      await page.waitForURL('**/inventory.html');
+      await expect(page, 'Should land on inventory page after login').toHaveURL(/inventory\.html/);
 
+      await expect(inventoryPage.getProductItems(), 'Products should be displayed on inventory page').not.toHaveCount(0);
       const srcs = await inventoryPage.getProductImageSrcs();
-      expect(srcs.length).toBeGreaterThan(0);
 
       const uniqueSrcs = new Set(srcs);
-      expect(uniqueSrcs.size).toBe(srcs.length);
+      expect(uniqueSrcs.size, 'Each product should have a unique image src').toBe(srcs.length);
     });
 
 });
@@ -152,11 +152,10 @@ test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
       await loggedInPage.addFirstProductToCart();
 
-      await expect(loggedInPage.getCartBadge())
+      await expect(loggedInPage.getCartBadge(), 'Cart badge should show 1 after adding a product')
         .toHaveText('1');
-
-      const count = await loggedInPage.getProductCount();
-      expect(count).toBeGreaterThan(0);
+      await expect(loggedInPage.getProductItems(), 'Products should still be displayed after adding to cart')
+        .not.toHaveCount(0);
     });
 
   // TC-012 — SAU-31
@@ -167,7 +166,7 @@ test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
       await loggedInPage.addFirstProductToCart();
 
-      await expect(loggedInPage.getCartBadge())
+      await expect(loggedInPage.getCartBadge(), 'Cart badge should show 1 after adding a product')
         .toHaveText('1');
     });
 
@@ -179,11 +178,11 @@ test.describe('Inventory Page — SAU-10, SAU-31', () => {
 
       await loggedInPage.sortBy('lohi');
 
+      await expect(loggedInPage.getProductItems(), 'Products should be displayed after sorting').not.toHaveCount(0);
       const prices = await loggedInPage.getProductPrices();
-      expect(prices.length).toBeGreaterThan(0);
 
       for (let i = 0; i < prices.length - 1; i++) {
-        expect(prices[i]).toBeLessThanOrEqual(prices[i + 1]);
+        expect(prices[i], `$${prices[i]} should be less than or equal to $${prices[i + 1]}`).toBeLessThanOrEqual(prices[i + 1]);
       }
     });
 
